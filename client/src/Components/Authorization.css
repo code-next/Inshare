@@ -1,0 +1,128 @@
+.singinlayer{
+  background-color:#fcfcfc;
+}
+.imagelayer{
+background:url("../images/pixel2test.jpg") repeat center top; 
+padding:0 0 0 0 !important;
+}
+.logo{
+  font-family:'Brandon Grotesque Black';
+  font-size: 40px;
+  font-weight: 100;
+  margin-left: 61.5%;
+  margin-top:15%;
+}
+.quote{
+  font-family: 'Laila', serif;
+  font-size: 40px;
+  font-weight: bold;
+  color:#b7b7b7;
+  transition: color 1s;
+  -webkit-transition: color 1s;
+  -moz-transition: color 1s;
+  margin-top:14%;
+  margin-left: -14.5%;
+}
+.quote-desc{
+  font-family: 'Roboto', sans-serif;
+  color:#5b5a5a;
+  font-size: 16px;
+  font-weight: 100;
+  transition: color 1s;
+  -webkit-transition: color 1s;
+  -moz-transition: color 1s;
+  margin-top:9%;
+  margin-left: -14.5%;
+}
+.quote-desc:hover{
+  color:#141414;
+}
+.quote:hover{
+  color:#2196F3;
+}
+.footerSignupLine{
+  width:60%;
+  text-align:center; 
+  border-bottom: 1px solid rgb(192, 192, 192);
+  line-height:0.1em;
+  margin:5% 20% 0 20%; 
+}
+.footerSignupLine span{
+  background:#fcfcfc;
+  padding:0 10px;
+  font-family: 'Courgette', cursive;
+  color:#5b5a5a;
+  font-size: 16px;
+  font-weight: 100;
+  transition: color 1s;
+  -webkit-transition: color 1s;
+  -moz-transition: color 1s;
+}
+.footerSignupLine span:hover{
+  color:#2196F3;
+}
+.iconGroup{
+  margin-top:2%!important;
+}
+.foreground{
+  width:100%;
+  height: 100%;
+  background-color: rgba(57,73,171,0.8);
+  box-shadow: inset rgb(51, 51, 51) 2px -3px 20px 0px;
+}
+.createLink{
+  margin-left:20%;
+  margin-top:5%;
+  color: #607D8B;
+  cursor: pointer;
+}
+.item{
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+.imgLayerContainer{
+  width:100%!important;
+  margin: 0 0 0 0 !important;
+}
+.whitespace{
+  height: 150px;
+}
+.front-heading{
+  font-family: 'Lato', sans-serif;
+  font-weight:100;
+  color: white;
+  font-size:65px;
+  margin: 0px !important;
+  padding-bottom: 40px;
+}
+.front-desc{
+  font-family: 'Raleway', sans-serif;
+  color:rgba(255,255,255,0.6);
+  font-size: 18px;
+  font-weight: 100;
+}
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .quote{
+    margin-top:14%;
+    margin-left: -10.5%;
+  }
+  .quote-desc{
+    margin-top:9%;
+    margin-left: -10.5%;
+  }
+}
+@media only screen and (max-width: 1280px) {
+  .iconGroup{
+    margin-top:1%!important;
+  }
+  .footerSignupLine{
+    margin:2% 20% 0 20% !important; 
+  }
+  .createLink{
+    margin-top:1%;
+  }
+  .whitespace{
+    height: 100px;
+  }
+}
