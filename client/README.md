@@ -48,7 +48,7 @@ Also, be sure to have `git` available in your PATH, `npm` might need it.
 
     $ git clone https://github.com/code-next/Inshare.git
     $ cd Inshare
-    $ git checkout client
+    $ cd client
     $ npm install
 
 ### Configure app
