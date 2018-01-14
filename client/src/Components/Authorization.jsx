@@ -63,9 +63,6 @@ const LogoAndWriting = () => (
     <Grid item xs={1} lg={3} />
   </Grid>
 );
-function newFunction(signup) {
-  return console.log(signup);
-}
 
 // function to load images
 function importAll(r) {
