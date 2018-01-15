@@ -14,6 +14,8 @@ pillow = "*"
 django-rest-swagger = "*"
 drf-openapi = "*"
 drfdocs = "*"
+redis = "*"
+celery = {extras = ["redis"]}
 
 
 [dev-packages]
