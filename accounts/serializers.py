@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import validate_email
 from rest_framework_jwt.settings import api_settings
 from .models import Person
+from .tasks import get_encodings_from_profile_pic
 from django.contrib.auth import authenticate
 # serializer classes goes here
 
@@ -36,7 +37,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         user.save()
         person = Person.objects.create(user=user,profile_pic=profile_pic)
         person.save()
-
+        get_encodings_from_profile_pic.delay(person.pk)
         # following are rest jwt settings
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
