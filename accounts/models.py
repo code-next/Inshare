@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Person(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_pic = models.ImageField(null=True)
+    profile_pic = models.ImageField(null=True,upload_to='media')
     face_encodings = models.BinaryField(null=True)
 
     def __str__(self):
