@@ -15,3 +15,4 @@ class Photo(models.Model):
                                  options={'quality': 60})
     date = models.DateField()
 
+
