@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { Grid } from 'material-ui';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import StepperStep from './StepperStep';
+import fbIcon from '../images/fbIcon.svg';
+import googleIcon from '../images/googleIcon.svg';
+import instaIcon from '../images/instaIcon.svg';
 import './Authorization.css';
 
 
@@ -13,7 +17,7 @@ class Authorization extends Component {
     this.state = {
       signUp: false,
       isLoggedIn: false,
-      Linkdisplay:'block'
+      Linkdisplay: 'block',
     };
     this.handleSignUp = this.handleSignUp.bind(this);
   }
@@ -23,18 +27,18 @@ class Authorization extends Component {
       isLoggedIn: true,
     });
   }
-  handleSignUp(){
-    this.setState({signUp:true,Linkdisplay:'none',});
+  handleSignUp() {
+    this.setState({ signUp: true, Linkdisplay: 'none' });
   }
   render() {
     return (
       (this.state.isLoggedIn) ?
         <Redirect to="/dashboard" />
         :
-        <Auth 
+        <Auth
           signup={this.state.signUp}
           handleSignUp={this.handleSignUp}
-          CrtLink={this.state.Linkdisplay} 
+          CrtLink={this.state.Linkdisplay}
         />
     );
   }
@@ -42,7 +46,7 @@ class Authorization extends Component {
 export default Authorization;
 
 // main component
-const Auth = (props) => (
+const Auth = props => (
   <Grid container className="masterlayer">
     <Grid item lg={4} xs={12} className="singinlayer">
       <LogoAndWriting />
@@ -75,20 +79,15 @@ const LogoAndWriting = () => (
     <Grid item xs={1} lg={3} />
   </Grid>
 );
-
-// function to load images
-function importAll(r) {
-  return r.keys().map(r);
-}
-const images = importAll(require.context('../images', false, /\.(svg)$/));
-
 // FooterSignUp component
-const FooterSignUp = (props) => (
+const FooterSignUp = props => (
   <div>
     <Grid container>
       <Grid item xs={12}>
-        <div className="createLink" 
-          style={{display:props.LinkDisplay}}>
+        <div
+          className="createLink"
+          style={{ display: props.LinkDisplay }}
+        >
           <a onClick={props.shiftSignUp}>Create new account.</a>
         </div>
       </Grid>
@@ -102,10 +101,26 @@ const FooterSignUp = (props) => (
     </Grid>
     <Grid container className="iconGroup">
       <Grid item xs={3} />
-      <Grid item xs={2} ><img src={images[2]} alt="insta icon" /></Grid>
-      <Grid item xs={2} ><img src={images[0]} alt="fb icon" /></Grid>
-      <Grid item xs={2} ><img src={images[1]} alt="google icon" /></Grid>
+      <Grid item xs={2} ><img src={instaIcon} alt="insta icon" /></Grid>
+      <Grid item xs={2} ><img src={fbIcon} alt="fb icon" /></Grid>
+      <Grid item xs={2} ><img src={googleIcon} alt="google icon" /></Grid>
       <Grid item xs={3} />
     </Grid>
   </div>
 );
+
+Auth.defaultProps = {
+  signup: false,
+};
+Auth.propTypes = {
+  signup: PropTypes.bool,
+  handleSignUp: PropTypes.func,
+  CrtLink: PropTypes.func,
+};
+FooterSignUp.defaultProps = {
+  LinkDisplay: 'block',
+};
+FooterSignUp.propTypes = {
+  LinkDisplay: PropTypes.string,
+  shiftSignUp: PropTypes.func,
+};
