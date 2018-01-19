@@ -39,7 +39,7 @@ class StepperStep extends Component {
             connector={null}
             style={{
               placeContent: 'normal normal',
-              marginLeft: '40%',
+              marginLeft: '45%',
               backgroundColor: 'rgba(57,73,171,0)',
             }}
           >

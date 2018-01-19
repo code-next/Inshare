@@ -13,7 +13,9 @@ class Authorization extends Component {
     this.state = {
       signUp: false,
       isLoggedIn: false,
+      Linkdisplay:'block'
     };
+    this.handleSignUp = this.handleSignUp.bind(this);
   }
   componentWillMount() {
     localStorage.getItem('InshareToken') && this.setState({
@@ -21,24 +23,34 @@ class Authorization extends Component {
       isLoggedIn: true,
     });
   }
+  handleSignUp(){
+    this.setState({signUp:true,Linkdisplay:'none',});
+  }
   render() {
     return (
       (this.state.isLoggedIn) ?
         <Redirect to="/dashboard" />
         :
-        <Auth signup={this.state.signUp} />
+        <Auth 
+          signup={this.state.signUp}
+          handleSignUp={this.handleSignUp}
+          CrtLink={this.state.Linkdisplay} 
+        />
     );
   }
 }
 export default Authorization;
 
 // main component
-const Auth = ({ signup }) => (
+const Auth = (props) => (
   <Grid container className="masterlayer">
     <Grid item lg={4} xs={12} className="singinlayer">
       <LogoAndWriting />
-      {(signup) ? <SignUp /> : <SignIn />}
-      <FooterSignUp />
+      {(props.signup) ? <SignUp /> : <SignIn />}
+      <FooterSignUp
+        shiftSignUp={props.handleSignUp}
+        LinkDisplay={props.CrtLink}
+      />
     </Grid>
     <Grid item lg={8} className="imagelayer">
       <div className="foreground">
@@ -68,14 +80,17 @@ const LogoAndWriting = () => (
 function importAll(r) {
   return r.keys().map(r);
 }
-const images = importAll(require.context('../images', false, /\.(png|jpe?g|svg)$/));
+const images = importAll(require.context('../images', false, /\.(svg)$/));
 
 // FooterSignUp component
-const FooterSignUp = () => (
+const FooterSignUp = (props) => (
   <div>
     <Grid container>
       <Grid item xs={12}>
-        <div className="createLink"><a>Create new account.</a></div>
+        <div className="createLink" 
+          style={{display:props.LinkDisplay}}>
+          <a onClick={props.shiftSignUp}>Create new account.</a>
+        </div>
       </Grid>
     </Grid>
     <Grid container >
