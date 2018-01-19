@@ -25,6 +25,7 @@ class SignUp extends Component {
     this.handleNext = this.handleNext.bind(this);
     this.handleUploadImage = this.handleUploadImage.bind(this);
     this.handleModelClose = this.handleModelClose.bind(this);
+    this.signUpPostRequest = this.signUpPostRequest.bind(this);
   }
   handleFirstName(e) { this.setState({ first_name: e.target.value }); }// setting firstname value
   handleEmail(e) { this.setState({ email: e.target.value }); }// setting value of email
@@ -49,6 +50,28 @@ class SignUp extends Component {
       openModel: false,
       imgSrc: this.cropElement.crop(),
     });
+  }
+  // signUp post request
+  signUpPostRequest() {
+    fetch('http://localhost:8000/auth/register/', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        first_name: this.state.first_name,
+        email: this.state.email,
+        password: this.state.password,
+        img: this.state.imgSrc,
+      }),
+    }).then(res => res.json())
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem('InshareToken', JSON.stringify(data));
+        }
+      })
+      .catch(err => console.log(err));
   }
   render() {
     return (
@@ -83,7 +106,7 @@ class SignUp extends Component {
           <Grid item lg={3} xs={2} />
           <Grid item lg={5} xs={5} />
           <Grid item lg={7} xs={7}>
-            <Button raised color="accent" className="signup-btn">SIGN UP</Button>
+            <Button raised color="accent" className="signup-btn" onClick={this.signUpPostRequest}>SIGN UP</Button>
           </Grid>
           <Modal open={this.state.openModel} onClose={this.handleModelClose}>
             <div className="crop-modal">
