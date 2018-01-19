@@ -16,6 +16,7 @@ drf-openapi = "*"
 drfdocs = "*"
 redis = "*"
 celery = {extras = ["redis"]}
+django-imagekit = "*"
 
 
 [dev-packages]
