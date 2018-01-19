@@ -25,7 +25,6 @@ class Authorization extends Component {
   }
   handleSignUp(){
     this.setState({signUp:true,Linkdisplay:'none',});
-    
   }
   render() {
     return (
@@ -81,7 +80,7 @@ const LogoAndWriting = () => (
 function importAll(r) {
   return r.keys().map(r);
 }
-const images = importAll(require.context('../images', false, /\.(png|jpe?g|svg)$/));
+const images = importAll(require.context('../images', false, /\.(svg)$/));
 
 // FooterSignUp component
 const FooterSignUp = (props) => (
