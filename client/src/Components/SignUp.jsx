@@ -63,7 +63,7 @@ class SignUp extends Component {
         first_name: this.state.first_name,
         email: this.state.email,
         password: this.state.password,
-        img: this.state.imgSrc,
+        profile_pic: this.state.imgSrc,
       }),
     }).then(res => res.json())
       .then((data) => {
