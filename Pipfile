@@ -17,6 +17,8 @@ drfdocs = "*"
 redis = "*"
 celery = {extras = ["redis"]}
 django-imagekit = "*"
+sorl-thumbnail = "*"
+easy-thumbnails = "*"
 
 
 [dev-packages]
