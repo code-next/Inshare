@@ -20,10 +20,13 @@ class Authorization extends Component {
       Linkdisplay: 'block',
     };
     this.handleSignUp = this.handleSignUp.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
   componentWillMount() {
+    this.handleLogin();
+  }
+  handleLogin() {
     localStorage.getItem('InshareToken') && this.setState({
-      token: JSON.parse(localStorage.getItem('InshareToken')).token,
       isLoggedIn: true,
     });
   }
@@ -39,6 +42,7 @@ class Authorization extends Component {
           signup={this.state.signUp}
           handleSignUp={this.handleSignUp}
           CrtLink={this.state.Linkdisplay}
+          handleLogin={this.handleLogin}
         />
     );
   }
@@ -50,7 +54,7 @@ const Auth = props => (
   <Grid container className="masterlayer">
     <Grid item lg={4} xs={12} className="singinlayer">
       <LogoAndWriting />
-      {(props.signup) ? <SignUp /> : <SignIn />}
+      {(props.signup) ? <SignUp login={props.handleLogin} /> : <SignIn login={props.handleLogin} />}
       <FooterSignUp
         shiftSignUp={props.handleSignUp}
         LinkDisplay={props.CrtLink}
@@ -111,11 +115,13 @@ const FooterSignUp = props => (
 
 Auth.defaultProps = {
   signup: false,
+  CrtLink: 'block',
 };
 Auth.propTypes = {
   signup: PropTypes.bool,
+  CrtLink: PropTypes.string,
   handleSignUp: PropTypes.func,
-  CrtLink: PropTypes.func,
+  handleLogin: PropTypes.func,
 };
 FooterSignUp.defaultProps = {
   LinkDisplay: 'block',

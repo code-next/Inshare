@@ -6,7 +6,7 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       isLoggedIn: false,
-      token:'',
+      token: '',
     };
   }
   componentWillMount() {
@@ -16,7 +16,6 @@ class Dashboard extends Component {
     });
   }
   render() {
-    console.log(this.state);
     return (
       (this.state.isLoggedIn) ? <h1>this is your Dashboard</h1> :
       <Redirect to="/" />
