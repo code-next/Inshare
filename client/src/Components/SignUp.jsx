@@ -69,6 +69,7 @@ class SignUp extends Component {
       .then((data) => {
         if (data.token) {
           localStorage.setItem('InshareToken', JSON.stringify(data));
+          this.props.login();
         }
       })
       .catch(err => console.log(err));
@@ -76,7 +77,7 @@ class SignUp extends Component {
   render() {
     return (
       (this.state.dp) ?
-      // view of image upload
+      // field view of image upload
         <Grid container>
           <Grid item lg={2} xs={1} />
           <Grid item lg={7} xs={9}>
@@ -106,7 +107,14 @@ class SignUp extends Component {
           <Grid item lg={3} xs={2} />
           <Grid item lg={5} xs={5} />
           <Grid item lg={7} xs={7}>
-            <Button raised color="accent" className="signup-btn" onClick={this.signUpPostRequest}>SIGN UP</Button>
+            <Button
+              raised
+              color="accent"
+              className="signup-btn"
+              onClick={this.signUpPostRequest}
+            >
+            SIGN UP
+            </Button>
           </Grid>
           <Modal open={this.state.openModel} onClose={this.handleModelClose}>
             <div className="crop-modal">
@@ -121,7 +129,7 @@ class SignUp extends Component {
           </Modal>
         </Grid>
         :
-        // view of firsname, email, password
+        // field view of firsname, email, password
         <Credentials
           changeFirstName={this.handleFirstName}
           first_name={this.state.first_name}
@@ -192,4 +200,7 @@ Credentials.propTypes = {
   first_name: PropTypes.string,
   email: PropTypes.string,
   password: PropTypes.string,
+};
+SignUp.propTypes = {
+  login: PropTypes.func,
 };
