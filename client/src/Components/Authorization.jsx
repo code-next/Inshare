@@ -92,7 +92,14 @@ const FooterSignUp = props => (
           className="createLink"
           style={{ display: props.LinkDisplay }}
         >
-          <a onClick={props.shiftSignUp}>Create new account.</a>
+          <a
+            role="button"
+            onKeyPress={props.shiftSignUp}
+            onClick={props.shiftSignUp}
+            tabIndex={0}
+          >
+          Create new account.
+          </a>
         </div>
       </Grid>
     </Grid>
