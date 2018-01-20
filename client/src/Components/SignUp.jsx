@@ -27,10 +27,30 @@ class SignUp extends Component {
     this.handleModelClose = this.handleModelClose.bind(this);
     this.signUpPostRequest = this.signUpPostRequest.bind(this);
   }
-  handleFirstName(e) { this.setState({ first_name: e.target.value }); }// setting firstname value
-  handleEmail(e) { this.setState({ email: e.target.value }); }// setting value of email
-  handlePassword(e) { this.setState({ password: e.target.value }); }// setting value of password
-  handleNext() { this.setState({ dp: true }); }// directing the view.(handling Next button)
+  // runs when user enter the name
+  handleFirstName(e) {
+    this.setState({
+      first_name: e.target.value,
+    });
+  }
+  // runs when user enter email
+  handleEmail(e) {
+    this.setState({
+      email: e.target.value,
+    });
+  }
+  // runs when user enter password
+  handlePassword(e) {
+    this.setState({
+      password: e.target.value,
+    });
+  }
+  // runs when user click the next button
+  handleNext() {
+    this.setState({
+      dp: true,
+    });
+  }
   // retrieve the path from the image-upload. And open the Modal
   handleUploadImage(e) {
     e.preventDefault();
@@ -44,14 +64,14 @@ class SignUp extends Component {
     };
     reader.readAsDataURL(file);
   }
-  // changing the crop image path
+  // changing the img path to crop image path
   handleModelClose() {
     this.setState({
       openModel: false,
       imgSrc: this.cropElement.crop(),
     });
   }
-  // signUp post request
+  // signUp post request - runs whenever the SIGN UP button clicks.
   signUpPostRequest() {
     fetch('http://localhost:8000/auth/register/', {
       method: 'POST',
@@ -89,7 +109,12 @@ class SignUp extends Component {
               }}
             >
               <div className="dp-hover-cover">
-                <a onClick={() => { this.inpuElement.click(); }}>
+                <a
+                  role="button"
+                  onClick={() => { this.inpuElement.click(); }}
+                  tabIndex="0"
+                  onKeyPress={() => { this.inpuElement.click(); }}
+                >
                   <img src={uploadIcon} alt="uplad icon" className="upload-icon" />
                   <input
                     type="file"
