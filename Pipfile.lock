@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "fc8784f3d59aaf4cca6ad9c53c2766b41cb0195e98b075add53a4e8942b5c645"
+            "sha256": "70b7396a9f7ec8f4f75ef836440c5d7a249ab0fc2f4a496f3d37771db8d0e877"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -9,9 +9,9 @@
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "4.10.0-32-generic",
+            "platform_release": "4.13.0-26-generic",
             "platform_system": "Linux",
-            "platform_version": "#36~16.04.1-Ubuntu SMP Wed Aug 9 09:19:02 UTC 2017",
+            "platform_version": "#29~16.04.2-Ubuntu SMP Tue Jan 9 22:00:44 UTC 2018",
             "python_full_version": "3.5.2",
             "python_version": "3.5",
             "sys_platform": "linux"
@@ -62,13 +62,6 @@
             ],
             "version": "==3.0.4"
         },
-        "click": {
-            "hashes": [
-                "sha256:29f99fc6125fbc931b758dc053b3114e55c77a6e4c6c3a2674a2dc986016381d",
-                "sha256:f15516df478d5a56180fbf80e68f206010e6d160fc39fa508b65e035fd75130b"
-            ],
-            "version": "==6.7"
-        },
         "coreapi": {
             "hashes": [
                 "sha256:bf39d118d6d3e171f10df9ede5666f63ad80bba9a29a8ec17726a66cf52ee6f3",
@@ -90,19 +83,12 @@
             ],
             "version": "==2.0.1"
         },
-        "django-appconf": {
+        "django-cors-headers": {
             "hashes": [
-                "sha256:ddab987d14b26731352c01ee69c090a4ebfc9141ed223bef039d79587f22acd9",
-                "sha256:6a4d9aea683b4c224d97ab8ee11ad2d29a37072c0c6c509896dd9857466fb261"
+                "sha256:4e02be61ffaaab5917f1fd7cc3c305c4fb7ccd0156a649c96f49bc0a09c5f572",
+                "sha256:451bc37a514792c2b46c52362368f7985985933ecdbf1a85f82652579a5cbe01"
             ],
-            "version": "==1.0.2"
-        },
-        "django-imagekit": {
-            "hashes": [
-                "sha256:304c3379f6a5cac387e47ace11195a603ad3cb01e3e951b45489824d25b00359",
-                "sha256:6ec0afb77cdf52cd453c9fc2c10ef350d111edfd6ce53c5977aa8a0e22cee00c"
-            ],
-            "version": "==4.0.2"
+            "version": "==2.1.0"
         },
         "django-rest-swagger": {
             "hashes": [
@@ -124,25 +110,6 @@
                 "sha256:5efe33032f3a4518a300dc51a51c92145ad95fb6f4b272e5aa24701db67936a7"
             ],
             "version": "==1.11.0"
-        },
-        "drf-openapi": {
-            "hashes": [
-                "sha256:21d28a0ea5b78243ee1b815041f715c1a7e9d60c063cbf9db5e4fa5535361460",
-                "sha256:1cd1164ac6262252cb629df4de2c1a3f9a738e608ec9b56f26545d45ed673c1f"
-            ],
-            "version": "==1.3.0"
-        },
-        "drfdocs": {
-            "hashes": [
-                "sha256:a94d63d714aa2796d85b695a665b17092260ab2447b9aed7453bf914a0056e1e"
-            ],
-            "version": "==0.0.11"
-        },
-        "easy-thumbnails": {
-            "hashes": [
-                "sha256:e244d1f26027fc32c6ca60ffb0169a39099446f614b0433e907a2588ae7d9b95"
-            ],
-            "version": "==2.5"
         },
         "idna": {
             "hashes": [
@@ -182,12 +149,6 @@
                 "sha256:1bce63289edf53c601ea3683120641407ff6b708803b8954c8a876fe778d2145"
             ],
             "version": "==1.3.2"
-        },
-        "pilkit": {
-            "hashes": [
-                "sha256:ddb30c2f0198a147e56b151476c3bb9fe045fbfd5b0a0fa2a3148dba62d1559f"
-            ],
-            "version": "==2.0"
         },
         "pillow": {
             "hashes": [
@@ -295,13 +256,6 @@
                 "sha256:e95f107de632ae6effa6915f194f2c282db592b9aa449070a5f9c065c478ec47"
             ],
             "version": "==3.13.2"
-        },
-        "six": {
-            "hashes": [
-                "sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb",
-                "sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9"
-            ],
-            "version": "==1.11.0"
         },
         "sorl-thumbnail": {
             "hashes": [
