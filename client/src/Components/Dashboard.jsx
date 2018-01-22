@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Drawer, Grid, Divider, Paper, Typography } from 'material-ui';
+import { Drawer, Grid, Divider, Paper, FormControl } from 'material-ui';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Input, { InputAdornment } from 'material-ui/Input';
-import { FormControl } from 'material-ui/Form';
+import GridList, { GridListTile } from 'material-ui/GridList';
 import { Photo, People, Share, Queue, PhotoLibrary, Search } from 'material-ui-icons';
 import profileDp from '../images/dp.png';
 import './Dashboard.css';
@@ -52,12 +52,17 @@ class Dashboard extends Component {
   }
 }
 export default Dashboard;
+function importAll() {
+  return require.context('../images-sample', false, /\.(png|jpe?g|svg)$/).keys().map(
+    require.context('../images-sample', false, /\.(png|jpe?g|svg)$/),
+  );
+}
+const Images = importAll();
 const GallerySearch = () => (
   <Grid container>
-    <Grid item className="gal-whitespace" lg={12} xs={12} />
-    <Grid item lg={2} />
-    <Grid item lg={10}>
-      <Paper>
+    <Grid item lg={3} />
+    <Grid item lg={8}>
+      <Paper className="gal-paper" style={{ paddingBottom: '5px!important', paddingTop: '15px' }}>
         <Grid container >
           <Grid item lg={1} />
           <Grid item lg={10}>
@@ -72,18 +77,34 @@ const GallerySearch = () => (
         </Grid>
       </Paper>
     </Grid>
+    <Grid item lg={1} />
   </Grid>
 );
 const GalleryPhotos = () => (
   <Grid container className="gal-photos">
-    <Grid item className="gal-whitespace" lg={12} xs={12} />
     <Grid item lg={2} />
     <Grid item lg={10}>
-      <Paper>
-        <Typography type="headline" component="h3">
-        December 2017
-        </Typography>
-
+      <Paper className="gal-paper">
+        <div className="gal-ph-collec-head">December 2016<span>(8photos)</span></div>
+        <GridList cellHeight={200} spacing={2} cols={4} >
+          { Images.map(elem => (
+            <GridListTile key={elem} cols={1} rows={1}>
+              <img src={elem} alt="just img" />
+            </GridListTile>
+            ))
+          }
+        </GridList>
+      </Paper>
+      <Paper className="gal-paper">
+        <div className="gal-ph-collec-head">November 2016<span>(8photos)</span></div>
+        <GridList cellHeight={200} spacing={2} cols={4} >
+          { Images.map(elem => (
+            <GridListTile key={elem} cols={1} rows={1}>
+              <img src={elem} alt="just img" />
+            </GridListTile>
+            ))
+          }
+        </GridList>
       </Paper>
     </Grid>
   </Grid>
