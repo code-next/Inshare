@@ -14,3 +14,4 @@ local_settings.py
 .idea/
 #local stuff
 media/
+cache/

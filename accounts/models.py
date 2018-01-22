@@ -6,7 +6,7 @@ from django.db import models
 
 
 class Person(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     profile_pic = models.ImageField(null=True, upload_to='media')
     face_encodings = models.BinaryField(null=True)
 
