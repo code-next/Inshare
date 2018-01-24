@@ -1,5 +1,6 @@
 .masterlayer{
-  height: 100vh !important;
+  width: calc(100% + 8px) !important;
+  height: calc(100vh + 8px) !important;
 }
 .singinlayer{
   background-color:#fcfcfc;
