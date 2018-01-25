@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { Drawer, Grid, Divider, Paper, AppBar, Button, Toolbar, IconButton, Typography } from 'material-ui';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import { Photo, People, Share, Queue, PhotoLibrary, Search, Menu } from 'material-ui-icons';
-import profileDp from '../images/dp.png';
+import { AppBar, Toolbar, Typography, Paper } from 'material-ui';
+import Tabs, { Tab } from 'material-ui/Tabs';
+import SwipeableViews from 'react-swipeable-views';
 import './Dashboard.css';
 
 class Dashboard extends Component {
@@ -13,12 +11,10 @@ class Dashboard extends Component {
     this.state = {
       isLoggedIn: false,
       token: '',
-      dpSrc: '',
-      photoCount: 286,
-      firstName: 'Tony',
-
+      tabIndex: 0,
     };
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   componentWillMount() {
     this.handleLogin();
@@ -30,20 +26,43 @@ class Dashboard extends Component {
       isLoggedIn: true,
     });
   }
+  handleChange(event, value) {
+    this.setState({ tabIndex: value });
+  }
   render() {
     return (
       (this.state.isLoggedIn) ?
         <div>
-          <AppBar position="static" color="primary">
+          <AppBar position="static" color="accent">
             <Toolbar>
-              <IconButton color="inherit" aria-label="Menu">
-                <Menu />
-              </IconButton>
               <Typography type="title" color="inherit">
                 in
               </Typography>
             </Toolbar>
           </AppBar>
+          <Paper className="gal-tab-paper">
+            <Tabs
+              value={this.state.tabIndex}
+              onChange={this.handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              fullWidth
+              centered
+            >
+              <Tab label="Gallery" />
+              <Tab label="Share" />
+              <Tab label="Friends" />
+            </Tabs>
+          </Paper>
+          <SwipeableViews
+            axis="x"
+            index={this.state.tabIndex}
+            onChangeIndex={this.handleChange}
+          >
+            <div>Gallery</div>
+            <div>Share</div>
+            <div>Friends</div>
+          </SwipeableViews>
           {/* actual content goes here */}
         </div>
         :
