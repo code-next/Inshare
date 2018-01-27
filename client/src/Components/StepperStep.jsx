@@ -73,8 +73,48 @@ class StepperStep extends Component {
                     </Stepper>
                 </Grid>
             </Grid>
-        );
-    }
+
+          </Grid>
+        </Grid>
+        <Grid item xs={12} className="item">
+          <Stepper
+            nonLinear
+            activeStep={stepIndex}
+            connector={null}
+            style={{
+              placeContent: 'normal normal',
+              marginLeft: '45%',
+              backgroundColor: 'rgba(57,73,171,0)',
+            }}
+          >
+            <Step>
+              <StepButton onClick={() => this.setState({
+                stepIndex: 0,
+                indexText: 'Select campaign settings...',
+                })}
+              />
+            </Step>
+            <Step>
+              <StepButton
+                onClick={() => this.setState({
+                stepIndex: 1,
+                indexText: 'Share your moments with us !',
+                })}
+              />
+            </Step>
+            <Step>
+              <StepButton onClick={() => this.setState({
+                stepIndex: 2,
+                indexText: 'This is the bit I really care about!',
+                })}
+              />
+            </Step>
+          </Stepper>
+        </Grid>
+      </Grid>
+    );
+  }
+
 }
 
 export default StepperStep;

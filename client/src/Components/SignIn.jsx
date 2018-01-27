@@ -1,3 +1,4 @@
+
 import React, {Component} from 'react';
 import {Button, Checkbox, FormControlLabel, Grid, TextField} from 'material-ui';
 import {Redirect} from 'react-router-dom';
@@ -99,7 +100,11 @@ class SignIn extends Component {
 
         );
     }
+
 }
 
 export default SignIn;
 
+SignIn.propTypes = {
+  login: PropTypes.func,
+};

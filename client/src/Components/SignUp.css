@@ -1,0 +1,55 @@
+.suTxt{
+  width:100%;
+  margin-left: 3.5% !important;
+  margin-top:3% !important;
+}
+.suFirstName{
+  margin-left: 3.5% !important;
+  margin-top:-2.5% !important;
+  width:100%;
+}
+.nxt-btn{
+  margin-left: 13% !important;
+}
+.dp-image-container{
+  width:200px;
+  height:200px;
+  border-radius: 50%;
+  margin-left:19%;
+}
+.signup-btn{
+  margin-left: -5%;
+}
+.dp-image-container:hover .dp-hover-cover{
+  visibility: visible;
+  opacity: 1;
+}
+.dp-hover-cover{
+  visibility: hidden;
+  opacity: 0;
+  width:100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: visibility 1s,opacity 1s;
+  -webkit-transition: visibility 1s,opacity 1s;
+  -moz-transition: visibility 1s,opacity 1s;
+}
+.upload-icon{
+  height:50px;
+  width:50px;
+  padding-left: 37%;
+  padding-top:40%;
+  cursor: pointer;
+}
+.crop-modal{
+  margin-left:30%;
+  margin-top:5%;
+  width: 500px;
+  padding: 20;
+  height: 400px;
+  border: none;
+}
+.crop-modal:focus{
+  outline: 0 !important;
+}

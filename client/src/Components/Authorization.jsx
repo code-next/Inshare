@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {Grid} from 'material-ui';
-import {Redirect} from 'react-router-dom';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import StepperStep from './StepperStep';
-import './Authorization.css';
+
+import React, { Component } from 'react';
+import { Grid } from 'material-ui';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 
 
 class Authorization extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -31,11 +31,13 @@ class Authorization extends Component {
                 <Auth signup={this.state.signUp}/>
         );
     }
+
 }
 
 export default Authorization;
 
 // main component
+
 const Auth = ({signup}) => (
     <Grid container className="masterlayer">
         <Grid item lg={4} xs={12} className="singinlayer">
@@ -48,6 +50,8 @@ const Auth = ({signup}) => (
                 <StepperStep/>
             </div>
         </Grid>
+
+
     </Grid>
 );
 // LogoAndWriting component
@@ -66,6 +70,7 @@ const LogoAndWriting = () => (
         <Grid item xs={1} lg={3}/>
     </Grid>
 );
+
 
 // function to load images
 function importAll(r) {
@@ -97,4 +102,6 @@ const FooterSignUp = () => (
             <Grid item xs={3}/>
         </Grid>
     </div>
-);
+
+
+

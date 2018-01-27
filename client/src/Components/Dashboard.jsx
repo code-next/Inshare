@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
 
 class Dashboard extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -24,6 +25,7 @@ class Dashboard extends Component {
                 <Redirect to="/"/>
         );
     }
+
 }
 
 export default Dashboard;
