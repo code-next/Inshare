@@ -1,9 +1,9 @@
-from django.shortcuts import render
 from rest_framework import permissions, generics
+from rest_framework import validators
+from rest_framework.response import Response
+
 from .models import Friend
 from .serializers import FriendRequestSerializer
-from rest_framework.response import Response
-from rest_framework import validators
 
 
 # Create your views here.

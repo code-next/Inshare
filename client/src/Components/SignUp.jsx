@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { Grid, TextField, Button, Modal } from 'material-ui';
 import PropTypes from 'prop-types';
@@ -141,7 +142,9 @@ class SignUp extends Component {
         />
     );
   }
+
 }
+
 export default SignUp;
 
 const Credentials = props => (

@@ -12,11 +12,10 @@ djangorestframework-jwt = "*"
 djangorestframework = "*"
 pillow = "*"
 django-rest-swagger = "*"
-drf-openapi = "*"
-drfdocs = "*"
 redis = "*"
 celery = {extras = ["redis"]}
-django-imagekit = "*"
+sorl-thumbnail = "*"
+django-cors-headers = "*"
 
 
 [dev-packages]
