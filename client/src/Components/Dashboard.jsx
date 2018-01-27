@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Paper } from 'material-ui';
+import { AppBar, Toolbar, Typography, Paper, IconButton } from 'material-ui';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
+import { Menu } from 'material-ui-icons';
 import './Dashboard.css';
 
 class Dashboard extends Component {
@@ -35,6 +36,9 @@ class Dashboard extends Component {
         <div>
           <AppBar position="static" color="accent">
             <Toolbar>
+              <IconButton color="inherit">
+                <Menu />
+              </IconButton>
               <Typography type="title" color="inherit">
                 in
               </Typography>
