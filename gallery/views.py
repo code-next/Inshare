@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
+from .tasks import get_encodings_and_compare_with_friends
 
 from .models import Photo
 from .permissions import IsOwnerOrDenided
@@ -17,6 +18,7 @@ class PhotoUploadView(generics.CreateAPIView):
     def perform_create(self, serializer):
         photo = serializer.save(owner=self.request.user)
         generate_image_thumbnails.delay(photo.pk)
+        get_encodings_and_compare_with_friends.delay(photo.pk)
 
 
 
