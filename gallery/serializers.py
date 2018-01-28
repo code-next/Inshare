@@ -17,7 +17,7 @@ class PhotoSerializer(serializers.ModelSerializer):
         fields = ['id', 'image', 'created_at','image_url']
         read_only_fields = ('id', 'create_at','image_url')
         extra_kwargs = {
-            "image": {"write_only": True}  # password cannot be viewed from the endpoint
+            "image": {"write_only": True}
         }
 
 

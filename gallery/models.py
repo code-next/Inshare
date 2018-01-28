@@ -11,3 +11,9 @@ class Photo(models.Model):
     image_thumb = models.ImageField()
     created_at = models.DateField(auto_now_add=True)
 
+
+class Tags(models.Model):
+    photo = models.ForeignKey(Photo,on_delete=models.CASCADE)
+    tag = models.CharField(max_length=30)
+    is_user = models.BooleanField()
+
