@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'friends',
     'accounts',
     'gallery',
+    'share',
     'rest_framework',
     'corsheaders',
     'sorl.thumbnail',
