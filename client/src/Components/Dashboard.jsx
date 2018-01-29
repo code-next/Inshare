@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-<<<<<<< 5cc5d7b1b9828b094d33ae3af440c47f998f2406
 import { AppBar, Toolbar, Typography, Paper, IconButton, Button, Grid } from 'material-ui';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import GridList, { GridListTile } from 'material-ui/GridList';
 import Menu, { MenuItem } from 'material-ui/Menu';
-=======
-import { AppBar, Toolbar, Typography, Paper, IconButton } from 'material-ui';
->>>>>>> slight changes
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Zoom from 'material-ui/transitions/Zoom';
 import SwipeableViews from 'react-swipeable-views';
-<<<<<<< 5cc5d7b1b9828b094d33ae3af440c47f998f2406
 import { Edit, Add, ArrowDropUp, MoreVert } from 'material-ui-icons';
 import MenuIcon from 'material-ui-icons/Menu';
-=======
-import { Menu } from 'material-ui-icons';
->>>>>>> slight changes
 import './Dashboard.css';
 
 class Dashboard extends Component {
@@ -89,15 +81,9 @@ class Dashboard extends Component {
           <AppBar position="static" color="accent">
             <Toolbar>
               <IconButton color="inherit">
-<<<<<<< 5cc5d7b1b9828b094d33ae3af440c47f998f2406
                 <MenuIcon />
               </IconButton>
               <Typography type="title" color="inherit" style={{ flex: 1 }}>
-=======
-                <Menu />
-              </IconButton>
-              <Typography type="title" color="inherit">
->>>>>>> slight changes
                 in
               </Typography>
               <IconButton
