@@ -16,6 +16,7 @@ class SignUp extends Component {
       password: '',
       imgSrc: '',
       openModel: false,
+      profilePic: [],
     };
     this.inpuElement = null;
     this.cropElement = null;
@@ -56,6 +57,7 @@ class SignUp extends Component {
     e.preventDefault();
     const reader = new FileReader();
     const file = e.target.files[0];
+    this.setState({profilePic:this.state.profilePic.push(file)});
     reader.onloadend = () => {
       this.setState({
         imgSrc: reader.result,
@@ -73,7 +75,7 @@ class SignUp extends Component {
   }
   // signUp post request - runs whenever the SIGN UP button clicks.
   signUpPostRequest() {
-    fetch('http://localhost:8000/auth/register/', {
+    fetch('http://10.172.174.104:8000/auth/register/', {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -83,7 +85,7 @@ class SignUp extends Component {
         first_name: this.state.first_name,
         email: this.state.email,
         password: this.state.password,
-        profile_pic: this.state.imgSrc,
+        profile_pic: this.state.profilePic[0],
       }),
     }).then(res => res.json())
       .then((data) => {
@@ -115,7 +117,7 @@ class SignUp extends Component {
                   tabIndex="0"
                   onKeyPress={() => { this.inpuElement.click(); }}
                 >
-                  <img src={uploadIcon} alt="uplad icon" className="upload-icon" />
+                  <img src={uploadIcon} alt="upload icon" className="upload-icon" />
                   <input
                     type="file"
                     multiple={false}
