@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Paper, IconButton, Button, Grid } from 'material-ui';
@@ -134,7 +135,9 @@ class Dashboard extends Component {
         <Redirect to="/" />
     );
   }
+
 }
+
 export default Dashboard;
 function importAll() {
   return require.context('../images-sample', false, /\.(png|jpe?g|svg)$/).keys()

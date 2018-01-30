@@ -1,8 +1,8 @@
-from rest_framework import generics, permissions, views
 from django.contrib.auth.models import User
+from rest_framework import generics, permissions
+
 from .serializers import UserCreateSerializer
-from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
+
 
 # Create your views here.
 
@@ -11,7 +11,6 @@ class UserCreateView(generics.CreateAPIView):
     permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserCreateSerializer
-
 
 # class UserLoginView(views.APIView):
 #     permission_classes = (permissions.AllowAny,)
@@ -29,5 +28,3 @@ class UserCreateView(generics.CreateAPIView):
 #             new_data = serializer.data
 #             return Response(new_data, status=HTTP_200_OK)
 #         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
-
-

@@ -1,5 +1,6 @@
 module.exports = {
     "extends": "airbnb",
+
     "plugins":[
         "react",
         "jsx-a11y",
@@ -8,6 +9,7 @@ module.exports = {
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "function-paren-newline": ["error", "consistent"],
+
     },
     "env": {
         "browser": true,

@@ -1,40 +1,47 @@
-.email{
-  margin-left: 3.5% !important;
-  margin-top:-2.5% !important;
-  width:100%;
+.email {
+    margin-left: 3.5% !important;
+    margin-top: -2.5% !important;
+    width: 100%;
 }
-.password{
-  width:100%;
-  margin-left: 3.5% !important;
-  margin-top:7% !important;
+
+.password {
+    width: 100%;
+    margin-left: 3.5% !important;
+    margin-top: 7% !important;
 }
-.check{
-  font-family: 'Roboto', sans-serif;
-  color:#5b5a5a;
-  font-size: 11px !important;
-  margin-top: 5% !important;
-  margin-left:-3.5%!important;
+
+.check {
+    font-family: 'Roboto', sans-serif;
+    color: #5b5a5a;
+    font-size: 11px !important;
+    margin-top: 5% !important;
+    margin-left: -3.5% !important;
 }
-.forgot{
-  padding-top:18%;
-  margin-left: -25%;
-  color: #607D8B;
-  cursor: pointer;
+
+.forgot {
+    padding-top: 18%;
+    margin-left: -25%;
+    color: #607D8B;
+    cursor: pointer;
 }
-.log-btn{
-  margin-left: 8.5%!important;
+
+.log-btn {
+    margin-left: 8.5% !important;
 }
+
 @media only screen and (max-width: 768px) {
-  /* For mobile phones: */
-  .forgot{
-    margin-left: -10%;
-    padding-top:25%;
-  }
-  .check{
-    margin-top:7% !important;
-    margin-right:0%!important;
-  }
-  .log-btn{
-    margin-left: 12%!important;
-  }
+    /* For mobile phones: */
+    .forgot {
+        margin-left: -10%;
+        padding-top: 25%;
+    }
+
+    .check {
+        margin-top: 7% !important;
+        margin-right: 0% !important;
+    }
+
+    .log-btn {
+        margin-left: 12% !important;
+    }
 }

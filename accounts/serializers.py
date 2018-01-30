@@ -1,10 +1,10 @@
-from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.core.validators import validate_email
+from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
+
 from .models import Person
 from .tasks import get_encodings_from_profile_pic
-from django.contrib.auth import authenticate
 
 
 # serializer classes goes here
