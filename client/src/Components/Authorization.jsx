@@ -57,17 +57,30 @@ const Auth = ({signup}) => (
 // LogoAndWriting component
 const LogoAndWriting = () => (
     <Grid container>
-        <Grid item xs={3} lg={3}>
-            <div className="logo">in</div>
-        </Grid>
-        <Grid item xs={8} lg={6}/>
-        <Grid item xs={1} lg={3}/>
-        <Grid item xs={3} lg={3}/>
-        <Grid item xs={8} lg={6}>
-            <div className="quote">we,<span style={{color: '#333232'}}> share</span></div>
-            <p className="quote-desc">Welcome Back, Please login <br/> to your account</p>
-        </Grid>
-        <Grid item xs={1} lg={3}/>
+
+      <Grid item xs={12}>
+        <div
+          className="createLink"
+          style={{ display: props.LinkDisplay }}
+        >
+          <a
+            role="button"
+            onKeyPress={props.shiftSignUp}
+            onClick={props.shiftSignUp}
+            tabIndex={0}
+          >
+          Create new account.
+          </a>
+        </div>
+      </Grid>
+    </Grid>
+    <Grid container >
+      <Grid item xs={12}>
+        <div className="footerSignupLine">
+          <span>OR</span>
+        </div>
+      </Grid>
+
     </Grid>
 );
 

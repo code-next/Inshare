@@ -5,15 +5,37 @@ import {Redirect} from 'react-router-dom';
 import './SignIn.css';
 
 class SignIn extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            password: '',
-            login: false,
-        };
-        this.handleSignIn = this.handleSignIn.bind(this);
-    }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+    };
+    this.handleSignIn = this.handleSignIn.bind(this);
+  }
+  handleSignIn() {
+    fetch('http://10.172.174.104:8000/auth/login/', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password,
+      }),
+    })
+      .then(res => res.json())
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem('InshareToken', JSON.stringify(data));
+          this.props.login();
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
 
     componentWillMount() {
 

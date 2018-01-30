@@ -1,0 +1,21 @@
+.gal-tab-paper{
+box-shadow:inset 0px 4px 5px 0px rgba(0, 0, 0, 0.2),
+ 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+  0px 3px 1px -2px rgba(0, 0, 0, 0.12) !important;
+}
+.tab-container{
+  padding: 24px;
+}
+.tab-month-text{
+  height: 50px;
+  font-family: 'Roboto', sans-serif;
+  color:#5b5a5a;
+  font-weight: 100;
+  font-size: 20pt;
+}
+.icon-button{
+  position: absolute !important;
+  float: right;
+  bottom: 10%;
+  right: 5%;
+}
