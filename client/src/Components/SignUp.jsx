@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { Grid, TextField, Button, Modal } from 'material-ui';
 import PropTypes from 'prop-types';
@@ -17,7 +16,7 @@ class SignUp extends Component {
       password: '',
       imgSrc: '',
       openModel: false,
-      profilePic: [],
+      profilePic: null,
     };
     this.inpuElement = null;
     this.cropElement = null;
@@ -58,7 +57,7 @@ class SignUp extends Component {
     e.preventDefault();
     const reader = new FileReader();
     const file = e.target.files[0];
-    this.setState({profilePic:this.state.profilePic.push(file)});
+    this.setState({ profilePic: file });
     reader.onloadend = () => {
       this.setState({
         imgSrc: reader.result,
@@ -86,7 +85,7 @@ class SignUp extends Component {
         first_name: this.state.first_name,
         email: this.state.email,
         password: this.state.password,
-        profile_pic: this.state.profilePic[0],
+        profile_pic: this.state.profilePic,
       }),
     }).then(res => res.json())
       .then((data) => {
@@ -169,9 +168,7 @@ class SignUp extends Component {
         />
     );
   }
-
 }
-
 export default SignUp;
 
 const Credentials = props => (
