@@ -16,11 +16,7 @@ class SignUp extends Component {
       password: '',
       imgSrc: '',
       openModel: false,
-<<<<<<< 8fba162bd398a32d17bb55bea372f2d3d376d139
       profilePic: null,
-=======
-      profilePic: [],
->>>>>>> overall ui added
     };
     this.inpuElement = null;
     this.cropElement = null;
@@ -61,11 +57,7 @@ class SignUp extends Component {
     e.preventDefault();
     const reader = new FileReader();
     const file = e.target.files[0];
-<<<<<<< 8fba162bd398a32d17bb55bea372f2d3d376d139
     this.setState({ profilePic: file });
-=======
-    this.setState({profilePic:this.state.profilePic.push(file)});
->>>>>>> overall ui added
     reader.onloadend = () => {
       this.setState({
         imgSrc: reader.result,
@@ -93,11 +85,7 @@ class SignUp extends Component {
         first_name: this.state.first_name,
         email: this.state.email,
         password: this.state.password,
-<<<<<<< 8fba162bd398a32d17bb55bea372f2d3d376d139
         profile_pic: this.state.profilePic,
-=======
-        profile_pic: this.state.profilePic[0],
->>>>>>> overall ui added
       }),
     }).then(res => res.json())
       .then((data) => {
