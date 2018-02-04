@@ -75,20 +75,23 @@ class SignUp extends Component {
   }
   // signUp post request - runs whenever the SIGN UP button clicks.
   signUpPostRequest() {
-    fetch('http://10.172.174.104:8000/auth/register/', {
+    const formData = new FormData();
+    formData.append('id', this.state.email);
+    formData.append('first_name', this.state.first_name);
+    formData.append('email', this.state.email);
+    formData.append('password', this.state.password);
+    formData.append('profile_pic', this.state.profilePic);
+    console.log(formData);
+    fetch('http://localhost:8000/auth/register/', {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
-        'Content-type': 'application/json',
+        'Content-type': 'multipart/form-data',
       },
-      body: JSON.stringify({
-        first_name: this.state.first_name,
-        email: this.state.email,
-        password: this.state.password,
-        profile_pic: this.state.profilePic,
-      }),
+      body: formData,
     }).then(res => res.json())
       .then((data) => {
+        console.log(data);
         if (data.token) {
           localStorage.setItem('InshareToken', JSON.stringify(data));
           this.props.login();
