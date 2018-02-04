@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
-from rest_framework import generics, permissions,parsers
+from rest_framework import generics, permissions,parsers,response,status
 from .serializers import UserCreateSerializer,ProfilePictureSerializer
+
 
 
 # Create your views here.
@@ -30,6 +31,11 @@ class UserCreateView(generics.CreateAPIView):
 
 
 class ProfilePictureView(generics.CreateAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
     serializer_class = ProfilePictureSerializer
     parser_classes = (parsers.FormParser,parsers.MultiPartParser,)
+
+    def post(self, request, *args, **kwargs):
+        # do the thing
+        print(self.request.data)
+        response.Response(status.HTTP_200_OK)
