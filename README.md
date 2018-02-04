@@ -1,12 +1,13 @@
-# How to run?
-### 1. clone the project
-### 2. pip install pipenv
-### 3. pipenv install
-### 4. python manage.py runserver
+# Inshare Photo Storage Application
+
+## How to install
+#### 1. pipenv shell
+#### 2. pipenv install
+#### 3. Open 3 terminal window
+##### 3.1. python manage.py runserver
+##### 3.2. redis-server
+##### 3.3. celery -A Inshare workers
+#### 4. All good
 
 
-#End Points
-### /auth/register
-#### Register a user. Returns a token
-### /auth/login
-#### Returns a token
+
