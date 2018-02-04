@@ -47,11 +47,11 @@ class Dashboard extends Component {
     switch (this.state.tabIndex) {
       case 0: this.imgInput.click();
         break;
-      case 1: console.log('second tab');
+      case 1: console.log('second tab fab button');
         break;
-      case 2: console.log('third tab');
+      case 2: console.log('third tab fab button');
         break;
-      default: console.log('unknown tab');
+      default: console.log('unknown tab fab button');
     }
   }
 
