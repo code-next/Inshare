@@ -75,27 +75,41 @@ class SignUp extends Component {
   }
   // signUp post request - runs whenever the SIGN UP button clicks.
   signUpPostRequest() {
-    const formData = new FormData();
+    const formData = new FormData(this.inpuForm);
+    // formData.append('id', this.state.email);
+    // formData.append('first_name', this.state.first_name);
+    // formData.append('email', this.state.email);
+    // formData.append('password', this.state.password);
+    // formData.append('profile_pic', this.state.profilePic);
+    // console.log(formData);
+    // fetch('http://localhost:8000/auth/register/', {
+    //   method: 'POST',
+    //   headers: {
+    //     Accept: 'application/json, text/plain, */*',
+    //     'Content-type': 'multipart/form-data',
+    //   },
+    //   body: formData,
+    // }).then(res => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     if (data.token) {
+    //       localStorage.setItem('InshareToken', JSON.stringify(data));
+    //       this.props.login();
+    //     }
+    //   })
+    //   .catch(err => console.log(err));
     formData.append('id', this.state.email);
-    formData.append('first_name', this.state.first_name);
-    formData.append('email', this.state.email);
-    formData.append('password', this.state.password);
-    formData.append('profile_pic', this.state.profilePic);
-    console.log(formData);
-    fetch('http://localhost:8000/auth/register/', {
+    // formData.append('profile_pic', this.state.profilePic);
+    fetch('http://localhost:8000/auth/profile-pic/', {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
-        'Content-type': 'multipart/form-data',
+        'Content-Type': 'multipart/form-data',
       },
       body: formData,
     }).then(res => res.json())
       .then((data) => {
         console.log(data);
-        if (data.token) {
-          localStorage.setItem('InshareToken', JSON.stringify(data));
-          this.props.login();
-        }
       })
       .catch(err => console.log(err));
   }
@@ -121,7 +135,8 @@ class SignUp extends Component {
                   onKeyPress={() => { this.inpuElement.click(); }}
                 >
                   <img src={uploadIcon} alt="upload icon" className="upload-icon" />
-                  <input
+                  <form encType="multipart/form-data" ref={(input) => { this.inpuForm = input; }}>
+                    <input
                     type="file"
                     multiple={false}
                     ref={(input) => { this.inpuElement = input; }}
@@ -129,6 +144,7 @@ class SignUp extends Component {
                     onChange={this.handleUploadImage}
                     style={{ display: 'none' }}
                   />
+                  </form>
                 </a>
               </div>
             </div>
