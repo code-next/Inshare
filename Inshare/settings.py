@@ -30,12 +30,12 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'friends',
     'accounts',
     'gallery',
     'share',
     'rest_framework',
-    'corsheaders',
     'sorl.thumbnail',
     'django.contrib.admin',
     'django.contrib.auth',

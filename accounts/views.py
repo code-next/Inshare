@@ -38,4 +38,4 @@ class ProfilePictureView(generics.CreateAPIView):
         # do the thing
         print(self.request.data)
         response.Response(status.HTTP_200_OK)
->>>>>>> development
+
