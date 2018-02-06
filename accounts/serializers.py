@@ -12,10 +12,10 @@ from .tasks import get_encodings_from_profile_pic
 
 class UserCreateSerializer(serializers.ModelSerializer):
     token = serializers.CharField(read_only=True)
-
+    profile_pic = serializers.ImageField(write_only=True)
     class Meta:
         model = User
-        fields = ["token", "first_name", "email", "password"]
+        fields = ["token", "first_name","profile_pic", "email", "password"]
         extra_kwargs = {
             "password": {"write_only": True}  # password cannot be viewed from the endpoint
         }
