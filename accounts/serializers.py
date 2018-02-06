@@ -34,10 +34,10 @@ class UserCreateSerializer(serializers.ModelSerializer):
         email = validated_data['email']
         password = validated_data['password']
         photo = validated_data['profile_pic']
-        print(photo)
         user = User.objects.create_user(username=email, email=email, password=password, first_name=first_name)
         user.save()
-
+        person = Person(user=user,profile_pic =photo)
+        person.save()
         # get_encodings_from_profile_pic.delay(person.pk)
         # following are rest jwt settings
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
