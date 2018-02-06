@@ -75,7 +75,7 @@ class SignUp extends Component {
   }
   // signUp post request - runs whenever the SIGN UP button clicks.
   signUpPostRequest() {
-    const formData = new FormData(this.inpuForm);
+    const formData = new FormData();
     // formData.append('id', this.state.email);
     // formData.append('first_name', this.state.first_name);
     // formData.append('email', this.state.email);
@@ -99,12 +99,12 @@ class SignUp extends Component {
     //   })
     //   .catch(err => console.log(err));
     formData.append('id', this.state.email);
+    formData.append('profile_pic', this.state.profilePic);
     // formData.append('profile_pic', this.state.profilePic);
     fetch('http://localhost:8000/auth/profile-pic/', {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
-        'Content-Type': 'multipart/form-data',
       },
       body: formData,
     }).then(res => res.json())
@@ -137,13 +137,13 @@ class SignUp extends Component {
                   <img src={uploadIcon} alt="upload icon" className="upload-icon" />
                   <form encType="multipart/form-data" ref={(input) => { this.inpuForm = input; }}>
                     <input
-                    type="file"
-                    multiple={false}
-                    ref={(input) => { this.inpuElement = input; }}
-                    accept=".jpg,.jpeg,.png"
-                    onChange={this.handleUploadImage}
-                    style={{ display: 'none' }}
-                  />
+                      type="file"
+                      multiple={false}
+                      ref={(input) => { this.inpuElement = input; }}
+                      accept=".jpg,.jpeg,.png"
+                      onChange={this.handleUploadImage}
+                      style={{ display: 'none' }}
+                    />
                   </form>
                 </a>
               </div>
