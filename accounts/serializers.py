@@ -38,7 +38,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         user.save()
         person = Person(user=user,profile_pic =photo)
         person.save()
-        # get_encodings_from_profile_pic.delay(person.pk)
+        get_encodings_from_profile_pic.delay(person.pk)
         # following are rest jwt settings
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
