@@ -76,32 +76,12 @@ class SignUp extends Component {
   // signUp post request - runs whenever the SIGN UP button clicks.
   signUpPostRequest() {
     const formData = new FormData();
-    // formData.append('id', this.state.email);
-    // formData.append('first_name', this.state.first_name);
-    // formData.append('email', this.state.email);
-    // formData.append('password', this.state.password);
-    // formData.append('profile_pic', this.state.profilePic);
-    // console.log(formData);
-    // fetch('http://localhost:8000/auth/register/', {
-    //   method: 'POST',
-    //   headers: {
-    //     Accept: 'application/json, text/plain, */*',
-    //     'Content-type': 'multipart/form-data',
-    //   },
-    //   body: formData,
-    // }).then(res => res.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     if (data.token) {
-    //       localStorage.setItem('InshareToken', JSON.stringify(data));
-    //       this.props.login();
-    //     }
-    //   })
-    //   .catch(err => console.log(err));
     formData.append('id', this.state.email);
     formData.append('profile_pic', this.state.profilePic);
-    // formData.append('profile_pic', this.state.profilePic);
-    fetch('http://localhost:8000/auth/profile-pic/', {
+    formData.append('first_name', this.state.first_name);
+    formData.append('email', this.state.email);
+    formData.append('password', this.state.password);
+    fetch('http://localhost:8000/auth/register/', {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -110,6 +90,10 @@ class SignUp extends Component {
     }).then(res => res.json())
       .then((data) => {
         console.log(data);
+        if (data.token) {
+          localStorage.setItem('InshareToken', data.token);
+          this.props.login();
+        }
       })
       .catch(err => console.log(err));
   }
@@ -128,24 +112,22 @@ class SignUp extends Component {
               }}
             >
               <div className="dp-hover-cover">
-                <a
+                <div
                   role="button"
                   onClick={() => { this.inpuElement.click(); }}
                   tabIndex="0"
                   onKeyPress={() => { this.inpuElement.click(); }}
                 >
                   <img src={uploadIcon} alt="upload icon" className="upload-icon" />
-                  <form encType="multipart/form-data" ref={(input) => { this.inpuForm = input; }}>
-                    <input
-                      type="file"
-                      multiple={false}
-                      ref={(input) => { this.inpuElement = input; }}
-                      accept=".jpg,.jpeg,.png"
-                      onChange={this.handleUploadImage}
-                      style={{ display: 'none' }}
-                    />
-                  </form>
-                </a>
+                  <input
+                    type="file"
+                    multiple={false}
+                    ref={(input) => { this.inpuElement = input; }}
+                    accept=".jpg,.jpeg,.png"
+                    onChange={this.handleUploadImage}
+                    style={{ display: 'none' }}
+                  />
+                </div>
               </div>
             </div>
 
