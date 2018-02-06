@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import generics, permissions,parsers,response,status
-from .serializers import UserCreateSerializer,ProfilePictureSerializer
+from .serializers import UserCreateSerializer
 
 
 
