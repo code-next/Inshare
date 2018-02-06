@@ -16,11 +16,12 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       isLoggedIn: false,
-      token: '',
+      token: null,
       tabIndex: 0,
-      ip: 'http://10.172.174.104:8000',
+      ip: 'http://localhost:8000',
       sharedImg: [],
       anchorEl: null,
+      menuOpen:false,
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -33,7 +34,7 @@ class Dashboard extends Component {
   // checking the user is logged in or not.
   handleLogin() {
     localStorage.getItem('InshareToken') && this.setState({
-      token: JSON.parse(localStorage.getItem('InshareToken')).token,
+      token:localStorage.getItem('InshareToken'),
       isLoggedIn: true,
     });
   }
@@ -56,17 +57,15 @@ class Dashboard extends Component {
   }
 
   handleUploadImages() {
-    fetch(`${this.state.ip}/images/upload`, {
+    const formData = new FormData();
+    formData.append('image', this.imgInput.files[0]);
+    fetch(`${this.state.ip}/gallery/upload/`, {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
-        'Content-type': 'application/json',
         Authorization: this.state.token,
       },
-      body: JSON.stringify({
-        images: this.imgInput.files,
-      }),
-
+      body: formData,
     })
       .then(res => res.json())
       .then((data) => {
@@ -88,17 +87,16 @@ class Dashboard extends Component {
               </Typography>
               <IconButton
                 color="inherit"
-                onClick={(e) => { this.setState({ anchorEl: e.currentTarget }); }}
+                onClick={(e) => { this.setState({ anchorEl: e.currentTarget, menuOpen: true }); }}
               >
                 <MoreVert />
               </IconButton>
               <Menu
                 id="simple-menu"
                 anchorEl={this.state.anchorEl}
-                open={this.state.anchorEl}
-                onClose={() => { this.setState({ anchorEl: null }); }}
+                open={this.state.menuOpen}
+                onClose={() => { this.setState({ anchorEl: null, menuOpen: false }); }}
               >
-                <MenuItem>My account</MenuItem>
                 <MenuItem>Logout</MenuItem>
               </Menu>
             </Toolbar>
