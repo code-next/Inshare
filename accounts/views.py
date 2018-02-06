@@ -32,10 +32,8 @@ class UserCreateView(generics.CreateAPIView):
 class ProfilePictureView(generics.CreateAPIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = ProfilePictureSerializer
-    parser_classes = (parsers.FormParser,parsers.MultiPartParser,)
+    parser_classes = (parsers.FormParser,parsers.MultiPartParser, )
 
-    def post(self, request, *args, **kwargs):
-        # do the thing
-        print(self.request.data)
-        response.Response(status.HTTP_200_OK)
-
+    def perform_create(self, serializer):
+        print(self.request.FILES['profile_pic'])
+        serializer.save(user=User.objects.get(pk=2))

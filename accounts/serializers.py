@@ -66,7 +66,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
 
 class ProfilePictureSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Person
-        fields = ['profile_pic',]
+        fields = ['profile_pic','user']
+        read_only_fields = ('user',)
