@@ -6,12 +6,13 @@ from .models import Photo
 from .permissions import IsOwnerOrDenided
 from .serializers import PhotoSerializer, PhotoThumbListSerializer, PhotoDeleteSerialzer
 from .tasks import generate_image_thumbnails
-
+from rest_framework import parsers
 # Create your views here.
 
 
 class PhotoUploadView(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
+    parser_classes = (parsers.FormParser,parsers.MultiPartParser, parsers.FileUploadParser)
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
 
