@@ -44,6 +44,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
         payload = jwt_payload_handler(user)
         token = jwt_encode_handler(payload)
+        token = "JWT " + token
         validated_data['token'] = token
         return validated_data
 
