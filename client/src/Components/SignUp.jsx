@@ -112,24 +112,22 @@ class SignUp extends Component {
               }}
             >
               <div className="dp-hover-cover">
-                <a
+                <div
                   role="button"
                   onClick={() => { this.inpuElement.click(); }}
                   tabIndex="0"
                   onKeyPress={() => { this.inpuElement.click(); }}
                 >
                   <img src={uploadIcon} alt="upload icon" className="upload-icon" />
-                  <form encType="multipart/form-data" ref={(input) => { this.inpuForm = input; }}>
-                    <input
-                      type="file"
-                      multiple={false}
-                      ref={(input) => { this.inpuElement = input; }}
-                      accept=".jpg,.jpeg,.png"
-                      onChange={this.handleUploadImage}
-                      style={{ display: 'none' }}
-                    />
-                  </form>
-                </a>
+                  <input
+                    type="file"
+                    multiple={false}
+                    ref={(input) => { this.inpuElement = input; }}
+                    accept=".jpg,.jpeg,.png"
+                    onChange={this.handleUploadImage}
+                    style={{ display: 'none' }}
+                  />
+                </div>
               </div>
             </div>
 
