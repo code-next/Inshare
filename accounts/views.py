@@ -29,11 +29,11 @@ class UserCreateView(generics.CreateAPIView):
 #             return Response(new_data, status=HTTP_200_OK)
 #         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
-class ProfilePictureView(generics.CreateAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = ProfilePictureSerializer
-    parser_classes = (parsers.FormParser,parsers.MultiPartParser, )
-
-    def perform_create(self, serializer):
-        print(self.request.FILES['profile_pic'])
-        serializer.save(user=self.request.user)
+# class ProfilePictureView(generics.CreateAPIView):
+#     permission_classes = (permissions.IsAuthenticated,)
+#     serializer_class = ProfilePictureSerializer
+#     parser_classes = (parsers.FormParser,parsers.MultiPartParser, )
+#
+#     def perform_create(self, serializer):
+#         print(self.request.FILES['profile_pic'])
+#         serializer.save(user=self.request.user)

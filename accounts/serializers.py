@@ -33,8 +33,11 @@ class UserCreateSerializer(serializers.ModelSerializer):
         first_name = validated_data['first_name']
         email = validated_data['email']
         password = validated_data['password']
+        photo = validated_data['profile_pic']
+        print(photo)
         user = User.objects.create_user(username=email, email=email, password=password, first_name=first_name)
         user.save()
+
         # get_encodings_from_profile_pic.delay(person.pk)
         # following are rest jwt settings
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
@@ -65,8 +68,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
 #         return attrs
 
 
-class ProfilePictureSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Person
-        fields = ['profile_pic','user']
-        read_only_fields = ('user',)
+# class ProfilePictureSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Person
+#         fields = ['profile_pic','user']
+#         read_only_fields = ('user',)
