@@ -53,3 +53,6 @@
 .crop-modal:focus{
   outline: 0 !important;
 }
+.dp-hover-cover div{
+  outline: 0 !important;
+}
