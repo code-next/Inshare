@@ -423,7 +423,7 @@ GalleryTabContainer.propTypes = {
   thumbnails: PropTypes.arrayOf(PropTypes.object),
 };
 ShareTabContainer.defaultProps = {
-  thumbnails: [{ thumbnail_url: '' }],
+  thumbnails: [{ photo: { owner: 0, thumbnail_url: '' } }],
   ip: '',
 };
 ShareTabContainer.propTypes = {
