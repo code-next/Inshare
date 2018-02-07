@@ -5,7 +5,7 @@ from .tasks import get_encodings_and_compare_with_friends
 from .models import Photo
 from .permissions import IsOwnerOrDenided
 from .serializers import PhotoSerializer, PhotoThumbListSerializer, PhotoDeleteSerialzer
-from .tasks import generate_image_thumbnails
+# from .tasks import generate_image_thumbnails
 from rest_framework import parsers
 # Create your views here.
 
@@ -18,7 +18,7 @@ class PhotoUploadView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         photo = serializer.save(owner=self.request.user)
-        generate_image_thumbnails.delay(photo.pk)
+        # generate_image_thumbnails.delay(photo.pk)
         get_encodings_and_compare_with_friends.delay(photo.pk)
 
 

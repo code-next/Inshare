@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from celery import shared_task
-from sorl.thumbnail import get_thumbnail
+# from sorl.thumbnail import get_thumbnail
 from .models import Photo,Tags
 import face_recognition
 from django.apps import apps
@@ -9,12 +9,12 @@ import numpy as np
 from accounts.models import Person
 # All the tasks goes here
 
-@shared_task()
-def generate_image_thumbnails(pk):
-    photo = Photo.objects.get(pk=pk)
-    photo.image_thumb = get_thumbnail(photo.image, '600x300', crop='center', quality=70).url
-    photo.save()
-    return
+# @shared_task()
+# def generate_image_thumbnails(pk):
+#     photo = Photo.objects.get(pk=pk)
+#     photo.image_thumb = get_thumbnail(photo.image, '600x300', crop='center', quality=70).url
+#     photo.save()
+#     return
 
 
 @shared_task()
