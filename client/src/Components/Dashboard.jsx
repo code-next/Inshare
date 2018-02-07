@@ -19,8 +19,8 @@ class Dashboard extends Component {
       isLoggedIn: false,
       token: null,
       tabIndex: 0,
-      ip: 'http://192.168.137.138:8000/',
-      sharedThumbs: [{ thumbnail_url: '' }],
+      ip: 'http://localhost:8000/',
+      sharedThumbs:[{photo:{owner:'',thumbnail_url:''}}],
       thumbnails: [{ thumbnail_url: '' }],
       anchorEl: null,
       menuOpen: false,
@@ -31,12 +31,14 @@ class Dashboard extends Component {
     this.handleUploadImages = this.handleUploadImages.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.getThumbs = this.getThumbs.bind(this);
+    this.getSharedThumbs = this.getSharedThumbs.bind(this);
   }
   componentWillMount() {
     this.handleLogin();
   }
   componentDidMount() {
     this.getThumbs();
+    this.getSharedThumbs();
   }
   // runs when dashboad is mounted and image is uploaded
   getThumbs() {
@@ -51,9 +53,10 @@ class Dashboard extends Component {
       .then((data) => {
         this.setState({ thumbnails: data });
       }).catch((err) => { console.log(err); });
+      console.log(this.state.thumbnails);
   }
   getSharedThumbs() {
-    fetch(`${this.state.ip}gallery/get-thumbs/`, {
+    fetch(`${this.state.ip}share/get-shared-img/`, {
       method: 'GET',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -62,8 +65,10 @@ class Dashboard extends Component {
     })
       .then(res => res.json())
       .then((data) => {
+        console.log(data);
         this.setState({ sharedThumbs: data });
       }).catch((err) => { console.log(err); });
+      console.log(this.state.sharedThumbs);
   }
   // checking the user is logged in or not.
   handleLogin() {
@@ -260,10 +265,13 @@ const ShareTabContainer = props => (
     <GridList cellHeight={160} cols={5}>
       {
         props.thumbnails.map(value => (
-          <GridListTile key={value.thumbnail_url}>
-            <img src={`${props.ip}${value.thumbnail_url}`} alt="grid img" />
+          <GridListTile key={value.photo.thumbnail_url}>
+            <img src={`${props.ip}${value.photo.thumbnail_url}`} alt="grid img" />
           </GridListTile>
         ))
+
+
+
 
       }
     </GridList>
