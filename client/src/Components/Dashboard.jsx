@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Typography, Paper, IconButton, Button, Grid } from 'material-ui';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import GridList, { GridListTile } from 'material-ui/GridList';
@@ -18,25 +19,62 @@ class Dashboard extends Component {
       isLoggedIn: false,
       token: null,
       tabIndex: 0,
-      ip: 'http://localhost:8000',
-      sharedImg: [],
+      ip: 'http://192.168.137.138:8000/',
+      sharedThumbs: [{ thumbnail_url: '' }],
+      thumbnails: [{ thumbnail_url: '' }],
       anchorEl: null,
-      menuOpen:false,
+      menuOpen: false,
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleUploadImages = this.handleUploadImages.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.getThumbs = this.getThumbs.bind(this);
   }
   componentWillMount() {
     this.handleLogin();
   }
+  componentDidMount() {
+    this.getThumbs();
+  }
+  // runs when dashboad is mounted and image is uploaded
+  getThumbs() {
+    fetch(`${this.state.ip}gallery/get-thumbs/`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        Authorization: this.state.token,
+      },
+    })
+      .then(res => res.json())
+      .then((data) => {
+        this.setState({ thumbnails: data });
+      }).catch((err) => { console.log(err); });
+  }
+  getSharedThumbs() {
+    fetch(`${this.state.ip}gallery/get-thumbs/`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        Authorization: this.state.token,
+      },
+    })
+      .then(res => res.json())
+      .then((data) => {
+        this.setState({ sharedThumbs: data });
+      }).catch((err) => { console.log(err); });
+  }
   // checking the user is logged in or not.
   handleLogin() {
     localStorage.getItem('InshareToken') && this.setState({
-      token:localStorage.getItem('InshareToken'),
+      token: localStorage.getItem('InshareToken'),
       isLoggedIn: true,
     });
+  }
+  handleLogout() {
+    localStorage.removeItem('InshareToken');
+    this.setState({ isLoggedIn: false });
   }
   handleChange(event, value) {
     this.setState({ tabIndex: value });
@@ -59,7 +97,7 @@ class Dashboard extends Component {
   handleUploadImages() {
     const formData = new FormData();
     formData.append('image', this.imgInput.files[0]);
-    fetch(`${this.state.ip}/gallery/upload/`, {
+    fetch(`${this.state.ip}gallery/upload/`, {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -68,10 +106,12 @@ class Dashboard extends Component {
       body: formData,
     })
       .then(res => res.json())
-      .then((data) => {
-        console.log(data);
+      .then(() => {
+        console.log('Image uploaded');
       })
       .catch(err => console.log(err));
+
+    setTimeout(() => { this.getThumbs(); }, 500);
   }
   render() {
     return (
@@ -97,7 +137,7 @@ class Dashboard extends Component {
                 open={this.state.menuOpen}
                 onClose={() => { this.setState({ anchorEl: null, menuOpen: false }); }}
               >
-                <MenuItem>Logout</MenuItem>
+                <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
               </Menu>
             </Toolbar>
           </AppBar>
@@ -110,8 +150,8 @@ class Dashboard extends Component {
             index={this.state.tabIndex}
             onChangeIndex={this.handleChange}
           >
-            <GalleryTabContainer />
-            <ShareTabContainer />
+            <GalleryTabContainer thumbnails={this.state.thumbnails} ip={this.state.ip} />
+            <ShareTabContainer thumbnails={this.state.sharedThumbs} ip={this.state.ip} />
             <FriendsTabContainer />
           </SwipeableViews>
           <AddButtons
@@ -133,11 +173,7 @@ class Dashboard extends Component {
   }
 }
 export default Dashboard;
-function importAll() {
-  return require.context('../images-sample', false, /\.(png|jpe?g|svg)$/).keys()
-    .map(require.context('../images-sample', false, /\.(png|jpe?g|svg)$/));
-}
-const Images = importAll();
+
 const TabComponent = props => (
   <Paper className="gal-tab-paper">
     <Tabs
@@ -196,7 +232,7 @@ const AddButtons = props => (
   </div>
 );
 
-const GalleryTabContainer = () => (
+const GalleryTabContainer = props => (
   <Typography component="div" className="tab-container">
     {/* repeat this upto number of months */}
     <div className="tab-month-text">
@@ -204,18 +240,18 @@ const GalleryTabContainer = () => (
     </div>
     <GridList cellHeight={160} cols={5}>
       {
-          Images.map(img => (
-            <GridListTile key={img}>
-              <img src={img} alt="grid img" />
-            </GridListTile>
-          ))
-        }
+        props.thumbnails.map(value => (
+          <GridListTile key={value.thumbnail_url}>
+            <img src={`${props.ip}${value.thumbnail_url}`} alt="grid img" />
+          </GridListTile>
+        ))
+      }
     </GridList>
     {/* ends of repeating */}
   </Typography>
 );
 
-const ShareTabContainer = () => (
+const ShareTabContainer = props => (
   <Typography component="div" className="tab-container">
     {/* repeat this upto number of months */}
     <div className="tab-month-text">
@@ -223,12 +259,13 @@ const ShareTabContainer = () => (
     </div>
     <GridList cellHeight={160} cols={5}>
       {
-          Images.map(img => (
-            <GridListTile key={img}>
-              <img src={img} alt="grid img" />
-            </GridListTile>
-          ))
-        }
+        props.thumbnails.map(value => (
+          <GridListTile key={value.thumbnail_url}>
+            <img src={`${props.ip}${value.thumbnail_url}`} alt="grid img" />
+          </GridListTile>
+        ))
+
+      }
     </GridList>
     {/* ends of repeating */}
   </Typography>
@@ -241,7 +278,7 @@ const FriendsTabContainer = () => (
       <Grid item xs={6} lg={3} >
         <Card>
           <CardMedia
-            image={Images[0]}
+            // image={}
             title="Sam"
           />
           <CardContent>
@@ -249,7 +286,8 @@ const FriendsTabContainer = () => (
                 Lizard
             </Typography>
             <Typography component="p">
-                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                Lizards are a widespread group of squamate reptiles,
+                with over 6,000 species, ranging
                 across all continents except Antarctica
             </Typography>
           </CardContent>
@@ -267,4 +305,27 @@ const FriendsTabContainer = () => (
     {/* ends of repeating */}
   </Typography>
 );
-
+TabComponent.defaultProps = {
+  tabIndex: 0,
+  handleChange: () => {},
+};
+TabComponent.propTypes = {
+  tabIndex: PropTypes.number,
+  handleChange: PropTypes.func,
+};
+GalleryTabContainer.defaultProps = {
+  thumbnails: [{ thumbnail_url: '' }],
+  ip: '',
+};
+GalleryTabContainer.propTypes = {
+  ip: PropTypes.string,
+  thumbnails: PropTypes.arrayOf(PropTypes.object),
+};
+ShareTabContainer.defaultProps = {
+  thumbnails: [{ thumbnail_url: '' }],
+  ip: '',
+};
+ShareTabContainer.propTypes = {
+  ip: PropTypes.string,
+  thumbnails: PropTypes.arrayOf(PropTypes.object),
+};
