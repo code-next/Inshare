@@ -25,4 +25,5 @@ urlpatterns = [
     path('gallery/', include("gallery.urls")),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.CACHE_URL, document_root=settings.CACHE_ROOT)
+
+

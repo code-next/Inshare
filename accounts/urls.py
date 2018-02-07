@@ -6,5 +6,6 @@ from .views import UserCreateView
 urlpatterns = [
     path('register/', UserCreateView.as_view(), name="registration"),
     path('login/', obtain_jwt_token, name="login"),
+    # path('login/v2/', UserLoginView.as_view(),name="new-login"),
 
 ]

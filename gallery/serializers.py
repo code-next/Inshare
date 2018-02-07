@@ -10,12 +10,12 @@ class PhotoSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField('get_the_image_url')
 
     def get_the_image_url(self, obj):
-        return '%s%s' % (settings.MEDIA_URL, obj.image)
+        return '%s%s' % (settings.MEDIA_URL,obj.image_thumbnail.url)
 
     class Meta:
         model = Photo
         fields = ['id', 'image', 'created_at','image_url']
-        read_only_fields = ('id', 'create_at','image_url',)
+        read_only_fields = ('id', 'created_at','image_url',)
         extra_kwargs = {
             "image": {"write_only": True}
         }
@@ -27,7 +27,7 @@ class PhotoThumbListSerializer(serializers.ModelSerializer):
     thumbnail_url = serializers.SerializerMethodField('get_the_thumbnail_url')
 
     def get_the_thumbnail_url(self, obj):
-        return '%s%s' % (settings.CACHE_URL, obj.image_thumb)
+        return '%s' % (obj.image_thumbnail.url)
 
     class Meta:
         model = Photo

@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.core.validators import validate_email
 from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
-
+from rest_framework.response import Response
 from .models import Person
 from .tasks import get_encodings_from_profile_pic
 
@@ -74,3 +74,23 @@ class UserCreateSerializer(serializers.ModelSerializer):
 #         model = Person
 #         fields = ['profile_pic','user']
 #         read_only_fields = ('user',)
+
+# class UserLoginSerializer(serializers.ModelSerializer):
+#     token = serializers.CharField(read_only=True)
+#     class Meta:
+#         model = User
+#         fields=('username','password','token',)
+#         extra_kwargs = {
+#             "password": {"write_only": True}  # password cannot be viewed from the endpoint
+#         }
+#
+#         def validate(self, attrs):
+#             email = attrs['email']
+#             user = User.objects.filter(email=email)
+#             if not user.exists():
+#                 raise serializers.ValidationError("Incorrect Username/Password")
+#             if validate_email(email):
+#                 raise serializers.ValidationError("Please check the email")
+#             return attrs
+
+

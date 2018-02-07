@@ -12,7 +12,7 @@ from accounts.models import Person
 @shared_task()
 def generate_image_thumbnails(pk):
     photo = Photo.objects.get(pk=pk)
-    photo.image_thumb = get_thumbnail(photo.image, '200x200', crop='center', quality=70).url
+    photo.image_thumb = get_thumbnail(photo.image, '600x300', crop='center', quality=70).url
     photo.save()
     return
 
