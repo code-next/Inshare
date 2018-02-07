@@ -8,7 +8,7 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Zoom from 'material-ui/transitions/Zoom';
 import SwipeableViews from 'react-swipeable-views';
-import { Edit, Add, ArrowDropUp, MoreVert } from 'material-ui-icons';
+import { Add, ArrowDropUp, MoreVert } from 'material-ui-icons';
 import MenuIcon from 'material-ui-icons/Menu';
 import shortid from 'shortid';
 import './Dashboard.css';
@@ -21,8 +21,8 @@ class Dashboard extends Component {
       token: null,
       tabIndex: 0,
       ip: '192.168.137.138:8000/',
-      sharedThumbs: [{photo:{owner:0,thumbnail_url:''}}],
-      thumbnails:[{ thumbnail_url: '', created_at: '2018-02-07' }]
+      sharedThumbs: [{ photo: { owner: 0, thumbnail_url: '' } }],
+      thumbnails: [{ thumbnail_url: '', created_at: '2018-02-07' }],
       // thumbnails: [
       //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2018-02-07' },
       //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2018-02-07' },
@@ -231,45 +231,43 @@ const TabComponent = props => (
     </Tabs>
   </Paper>
 );
-// icon button configurations
-const addButtons = [
-  {
-    color: 'primary',
-    className: 'icon-button',
-    icon: <Add />,
-  },
-  {
-    // color: 'accent',
-    // className: 'icon-button',
-    // icon: <Edit />,
-  },
-  {
-    color: 'inherit',
-    className: 'icon-button',
-    icon: <ArrowDropUp />,
-  },
-];
+
 const AddButtons = props => (
   <div>
-    {addButtons.map((addButtons, index) => (
-      <Zoom
-        appear={false}
-        key={addButtons.color}
-        in={props.tabIndex === index}
-        timeout={200}
-        enterDelay={300}
-        unmountOnExit
+
+    <Zoom
+      appear={false}
+      in={props.tabIndex === 0}
+      timeout={200}
+      enterDelay={300}
+      unmountOnExit
+    >
+      <Button
+        fab
+        className="icon-button"
+        color="primary"
+        onClick={props.click}
       >
-        <Button
-          fab
-          className={addButtons.className}
-          color={addButtons.color}
-          onClick={props.click}
-        >
-          {addButtons.icon}
-        </Button>
-      </Zoom>
-        ))}
+        <Add />
+      </Button>
+    </Zoom>
+    <Zoom
+      appear={false}
+      in={props.tabIndex === 2}
+      timeout={200}
+      enterDelay={300}
+      unmountOnExit
+    >
+      <Button
+        fab
+        className="icon-button"
+        color="accent"
+        onClick={props.click}
+      >
+        <ArrowDropUp />
+      </Button>
+    </Zoom>
+
   </div>
 );
 const Months = [
@@ -358,18 +356,15 @@ const ShareTabContainer = props => (
   <Typography component="div" className="tab-container">
     {/* repeat this upto number of months */}
     <div className="tab-month-text">
-      <span>December 2017</span>
+      {/* <span>December 2017</span> */}
     </div>
     <GridList cellHeight={160} cols={5}>
       {
         props.thumbnails.map(value => (
           <GridListTile key={shortid.generate()}>
-            <img src={`http://${props.ip}${value.thumbnail_url}`} alt="grid img" />
+            <img src={`http://${props.ip}${value.photo.thumbnail_url}`} alt="grid img" />
           </GridListTile>
         ))
-
-
-
 
       }
     </GridList>
