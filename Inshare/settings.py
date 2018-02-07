@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'gallery',
     'share',
     'rest_framework',
-    'sorl.thumbnail',
+    'imagekit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -185,7 +185,9 @@ CELERY_BEAT_SCHEDULE = {}
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = '/imagefiles/'
+MEDIA_URL = 'images/'
 
-CACHE_ROOT = os.path.join(BASE_DIR, 'cache')
-CACHE_URL = '/thumbs/'
+
+
+# CACHE_ROOT = os.path.join(BASE_DIR, 'cache')
+# CACHE_URL = '/thumbs/'

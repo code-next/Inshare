@@ -16,6 +16,7 @@ redis = "*"
 celery = {extras = ["redis"]}
 sorl-thumbnail = "*"
 django-cors-headers = "*"
+django-imagekit = "*"
 
 
 [dev-packages]
