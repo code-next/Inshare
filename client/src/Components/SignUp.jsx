@@ -81,7 +81,7 @@ class SignUp extends Component {
     formData.append('first_name', this.state.first_name);
     formData.append('email', this.state.email);
     formData.append('password', this.state.password);
-    fetch('http://localhost:8000/auth/register/', {
+    fetch('http://192.168.137.138:8000/auth/register/', {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -89,7 +89,6 @@ class SignUp extends Component {
       body: formData,
     }).then(res => res.json())
       .then((data) => {
-        console.log(data);
         if (data.token) {
           localStorage.setItem('InshareToken', data.token);
           this.props.login();
@@ -149,8 +148,8 @@ class SignUp extends Component {
               <Cropper
                 src={this.state.imgSrc}
                 ref={(input) => { this.cropElement = input; }}
-                height={500}
-                width={500}
+                height={700}
+                width={700}
                 fixedRatio
               />
             </div>

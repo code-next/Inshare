@@ -13,7 +13,7 @@ class SignIn extends Component {
     this.handleSignIn = this.handleSignIn.bind(this);
   }
   handleSignIn() {
-    fetch('http://10.172.174.104:8000/auth/login/', {
+    fetch('http://192.168.137.138:8000/auth/login/', {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -27,7 +27,7 @@ class SignIn extends Component {
       .then(res => res.json())
       .then((data) => {
         if (data.token) {
-          localStorage.setItem('InshareToken', JSON.stringify(data));
+          localStorage.setItem('InshareToken', `JWT ${data.token}`);
           this.props.login();
         }
       })
