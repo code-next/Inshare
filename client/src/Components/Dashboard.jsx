@@ -21,7 +21,7 @@ class Dashboard extends Component {
       token: null,
       tabIndex: 0,
       ip: '192.168.137.138:8000/',
-      sharedThumbs: [{ thumbnail_url: '' }],
+      sharedThumbs: [{photo:{owner:0,thumbnail_url:''}}],
       thumbnails:[{ thumbnail_url: '', created_at: '2018-02-07' }]
       // thumbnails: [
       //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2018-02-07' },
@@ -48,8 +48,8 @@ class Dashboard extends Component {
     this.handleLogin();
   }
   componentDidMount() {
-    // this.getThumbs();
-    this.sortByDate();
+    this.getThumbs();
+    this.getSharedThumbs();
   }
   // runs when dashboad is mounted and image is uploaded
   getThumbs() {
@@ -77,6 +77,7 @@ class Dashboard extends Component {
     })
       .then(res => res.json())
       .then((data) => {
+        console.log(data);
         this.setState({ sharedThumbs: data });
         this.sortByDate();
       })
@@ -366,6 +367,9 @@ const ShareTabContainer = props => (
             <img src={`http://${props.ip}${value.thumbnail_url}`} alt="grid img" />
           </GridListTile>
         ))
+
+
+
 
       }
     </GridList>

@@ -23,6 +23,7 @@ urlpatterns = [
     path('friends/', include("friends.urls")),
     path('auth/', include("accounts.urls")),
     path('gallery/', include("gallery.urls")),
+    path('share/', include("share.urls")),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
