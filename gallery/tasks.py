@@ -25,10 +25,13 @@ def get_encodings_and_compare_with_friends(pk):
     encodings = face_recognition.face_encodings(image)
     for encoding in encodings:
         for person in persons:
-            person_encoding=np.loads(person.face_encodings)
-            results = face_recognition.compare_faces([encoding],person_encoding)
-            if results[0]:
-                tag = Tags(photo= photo, tag = person.pk, is_user=True)
-                tag.save()
+            try:
+                person_encoding=np.loads(person.face_encodings)
+                results = face_recognition.compare_faces([encoding],person_encoding)
+                if results[0]:
+                    tag = Tags(photo= photo, tag = person.pk, is_user=True)
+                    tag.save()
+            except:
+                print("user does not have face encodings")
     return
 

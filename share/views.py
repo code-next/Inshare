@@ -13,5 +13,4 @@ class SharedImageListView(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         queryset = Tags.objects.filter(tag=self.request.user.pk,is_user=True)
         serializer = SharedImageSerializer(queryset, many=True)
-        print(serializer.data)
         return Response(serializer.data)
