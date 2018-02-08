@@ -20,7 +20,7 @@ class Dashboard extends Component {
       isLoggedIn: false,
       token: null,
       tabIndex: 0,
-      ip: '192.168.137.138:8000/',
+      ip: '192.168.43.6',
       sharedThumbs: [{ photo: { owner: 0, thumbnail_url: '' } }],
       thumbnails: [{ thumbnail_url: '', created_at: '2018-02-07' }],
       // thumbnails: [
@@ -50,10 +50,11 @@ class Dashboard extends Component {
   componentDidMount() {
     this.getThumbs();
     this.getSharedThumbs();
+    this.sortByDate();
   }
   // runs when dashboad is mounted and image is uploaded
   getThumbs() {
-    fetch(`http://${this.state.ip}gallery/get-thumbs/`, {
+    fetch(`http://${this.state.ip}:8000/gallery/get-thumbs/`, {
       method: 'GET',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -62,13 +63,13 @@ class Dashboard extends Component {
     })
       .then(res => res.json())
       .then((data) => {
-        const sortData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
-        this.setState({ thumbnails: sortData });
+        this.setState({ thumbnails: data });
       })
       .catch((err) => { console.log(err); });
+    setTimeout(() => { this.sortByDate(); }, 100);
   }
   getSharedThumbs() {
-    fetch(`http://${this.state.ip}gallery/get-thumbs/`, {
+    fetch(`http://${this.state.ip}:8000/share/get-shared-img/`, {
       method: 'GET',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -98,6 +99,7 @@ class Dashboard extends Component {
     const result = Object.keys(groupedDates)
       .sort((a, b) => Number(b) - Number(a))
       .map(key => groupedDates[key]);
+    console.log(result);
     this.setState({ sortedThubnails: result });
   }
   // checking the user is logged in or not.
@@ -115,7 +117,7 @@ class Dashboard extends Component {
   handleChange(event, value) {
     this.setState({ tabIndex: value });
     if (value === 1) {
-
+      this.getSharedThumbs();
     }
   }
   // runs when fab button clicks
@@ -134,7 +136,7 @@ class Dashboard extends Component {
   handleUploadImages() {
     const formData = new FormData();
     formData.append('image', this.imgInput.files[0]);
-    fetch(`http://${this.state.ip}gallery/upload/`, {
+    fetch(`http://${this.state.ip}:8000/gallery/upload/`, {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -149,6 +151,8 @@ class Dashboard extends Component {
       .catch(err => console.log(err));
 
     setTimeout(() => { this.getThumbs(); }, 500);
+    setTimeout(() => { this.getThumbs(); }, 1000);
+    setTimeout(() => { this.getThumbs(); }, 1500);
   }
   render() {
     return (
@@ -330,6 +334,7 @@ const GalleryTabContainer = props => (
             if (month.count === keys[1]) { return month; }
             return '';
           });
+        console.log(props.sortedThubnails);
         return (
           <div key={shortid.generate()}>
             <div className="tab-month-text">
@@ -339,7 +344,7 @@ const GalleryTabContainer = props => (
               {
                   collection.map(value => (
                     <GridListTile key={shortid.generate()}>
-                      <img src={`http://${props.ip}${value.thumbnail_url}`} alt="grid img" />
+                      <img src={`http://${props.ip}:8000/${value.thumbnail_url}`} alt="grid img" />
                       {/* <img src={`${value.thumbnail_url}`} alt="grid img" /> */}
                     </GridListTile>
                   ))
@@ -362,7 +367,7 @@ const ShareTabContainer = props => (
       {
         props.thumbnails.map(value => (
           <GridListTile key={shortid.generate()}>
-            <img src={`http://${props.ip}${value.photo.thumbnail_url}`} alt="grid img" />
+            <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
           </GridListTile>
         ))
 
