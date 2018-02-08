@@ -8,8 +8,9 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Zoom from 'material-ui/transitions/Zoom';
 import SwipeableViews from 'react-swipeable-views';
-import { Edit, Add, ArrowDropUp, MoreVert } from 'material-ui-icons';
+import { Add, ArrowDropUp, MoreVert } from 'material-ui-icons';
 import MenuIcon from 'material-ui-icons/Menu';
+import shortid from 'shortid';
 import './Dashboard.css';
 
 class Dashboard extends Component {
@@ -19,11 +20,20 @@ class Dashboard extends Component {
       isLoggedIn: false,
       token: null,
       tabIndex: 0,
-      ip: 'http://localhost:8000/',
-      sharedThumbs:[{photo:{owner:'',thumbnail_url:''}}],
-      thumbnails: [{ thumbnail_url: '' }],
+      ip: '192.168.137.138:8000/',
+      sharedThumbs: [{ photo: { owner: 0, thumbnail_url: '' } }],
+      thumbnails: [{ thumbnail_url: '', created_at: '2018-02-07' }],
+      // thumbnails: [
+      //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2018-02-07' },
+      //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2018-02-07' },
+      //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2017-02-07' },
+      //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2017-03-07' },
+      //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2017-02-07' },
+      //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2018-02-07' },
+      // ],
       anchorEl: null,
       menuOpen: false,
+      sortedThubnails: [[{ thumbnail_url: '', created_at: '2018-02-07' }]],
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -32,6 +42,7 @@ class Dashboard extends Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.getThumbs = this.getThumbs.bind(this);
     this.getSharedThumbs = this.getSharedThumbs.bind(this);
+    this.sortByDate = this.sortByDate.bind(this);
   }
   componentWillMount() {
     this.handleLogin();
@@ -42,7 +53,7 @@ class Dashboard extends Component {
   }
   // runs when dashboad is mounted and image is uploaded
   getThumbs() {
-    fetch(`${this.state.ip}gallery/get-thumbs/`, {
+    fetch(`http://${this.state.ip}gallery/get-thumbs/`, {
       method: 'GET',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -51,12 +62,13 @@ class Dashboard extends Component {
     })
       .then(res => res.json())
       .then((data) => {
-        this.setState({ thumbnails: data });
-      }).catch((err) => { console.log(err); });
-      console.log(this.state.thumbnails);
+        const sortData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        this.setState({ thumbnails: sortData });
+      })
+      .catch((err) => { console.log(err); });
   }
   getSharedThumbs() {
-    fetch(`${this.state.ip}share/get-shared-img/`, {
+    fetch(`http://${this.state.ip}gallery/get-thumbs/`, {
       method: 'GET',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -67,8 +79,26 @@ class Dashboard extends Component {
       .then((data) => {
         console.log(data);
         this.setState({ sharedThumbs: data });
-      }).catch((err) => { console.log(err); });
-      console.log(this.state.sharedThumbs);
+        this.sortByDate();
+      })
+      .catch((err) => { console.log(err); });
+  }
+  sortByDate() {
+    const groupedDates = this.state.thumbnails.reduce((list, r) => {
+      const keyParts = r.created_at.split('-');
+      const key = keyParts[0] + keyParts[1];
+
+      if (typeof list[key] === 'undefined') {
+        list[key] = [];
+      }
+      list[key].push(r);
+      return list;
+    }, {});
+
+    const result = Object.keys(groupedDates)
+      .sort((a, b) => Number(b) - Number(a))
+      .map(key => groupedDates[key]);
+    this.setState({ sortedThubnails: result });
   }
   // checking the user is logged in or not.
   handleLogin() {
@@ -77,6 +107,7 @@ class Dashboard extends Component {
       isLoggedIn: true,
     });
   }
+  // runs when logout button clicks
   handleLogout() {
     localStorage.removeItem('InshareToken');
     this.setState({ isLoggedIn: false });
@@ -87,6 +118,7 @@ class Dashboard extends Component {
 
     }
   }
+  // runs when fab button clicks
   handleClick() {
     switch (this.state.tabIndex) {
       case 0: this.imgInput.click();
@@ -98,11 +130,11 @@ class Dashboard extends Component {
       default: console.log('unknown tab fab button');
     }
   }
-
+  // runs when the file is uploaded
   handleUploadImages() {
     const formData = new FormData();
     formData.append('image', this.imgInput.files[0]);
-    fetch(`${this.state.ip}gallery/upload/`, {
+    fetch(`http://${this.state.ip}gallery/upload/`, {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -122,7 +154,7 @@ class Dashboard extends Component {
     return (
       (this.state.isLoggedIn) ?
         <div>
-          <AppBar position="static" color="accent">
+          <AppBar position="fixed" color="accent">
             <Toolbar>
               <IconButton color="inherit">
                 <MenuIcon />
@@ -155,7 +187,11 @@ class Dashboard extends Component {
             index={this.state.tabIndex}
             onChangeIndex={this.handleChange}
           >
-            <GalleryTabContainer thumbnails={this.state.thumbnails} ip={this.state.ip} />
+            <GalleryTabContainer
+              thumbnails={this.state.thumbnails}
+              ip={this.state.ip}
+              sortedThubnails={this.state.sortedThubnails}
+            />
             <ShareTabContainer thumbnails={this.state.sharedThumbs} ip={this.state.ip} />
             <FriendsTabContainer />
           </SwipeableViews>
@@ -195,64 +231,124 @@ const TabComponent = props => (
     </Tabs>
   </Paper>
 );
-// icon button configurations
-const addButtons = [
-  {
-    color: 'primary',
-    className: 'icon-button',
-    icon: <Add />,
-  },
-  {
-    color: 'accent',
-    className: 'icon-button',
-    icon: <Edit />,
-  },
-  {
-    color: 'inherit',
-    className: 'icon-button',
-    icon: <ArrowDropUp />,
-  },
-];
+
 const AddButtons = props => (
   <div>
-    {addButtons.map((addButtons, index) => (
-      <Zoom
-        appear={false}
-        key={addButtons.color}
-        in={props.tabIndex === index}
-        timeout={200}
-        enterDelay={300}
-        unmountOnExit
+
+    <Zoom
+      appear={false}
+      in={props.tabIndex === 0}
+      timeout={200}
+      enterDelay={300}
+      unmountOnExit
+    >
+      <Button
+        fab
+        className="icon-button"
+        color="primary"
+        onClick={props.click}
       >
-        <Button
-          fab
-          className={addButtons.className}
-          color={addButtons.color}
-          onClick={props.click}
-        >
-          {addButtons.icon}
-        </Button>
-      </Zoom>
-        ))}
+        <Add />
+      </Button>
+    </Zoom>
+    <Zoom
+      appear={false}
+      in={props.tabIndex === 2}
+      timeout={200}
+      enterDelay={300}
+      unmountOnExit
+    >
+      <Button
+        fab
+        className="icon-button"
+        color="accent"
+        onClick={props.click}
+      >
+        <ArrowDropUp />
+      </Button>
+    </Zoom>
+
   </div>
 );
+const Months = [
+  {
+    count: '01',
+    text: 'January',
+  },
+  {
+    count: '02',
+    text: 'February',
+  },
+  {
+    count: '03',
+    text: 'March',
+  },
+  {
+    count: '04',
+    text: 'April',
+  },
+  {
+    count: '05',
+    text: 'May',
+  },
+  {
+    count: '06',
+    text: 'June',
+  },
+  {
+    count: '07',
+    text: 'July',
+  },
+  {
+    count: '08',
+    text: 'August',
+  },
+  {
+    count: '09',
+    text: 'September',
+  },
+  {
+    count: '10',
+    text: 'Octobar',
+  },
+  {
+    count: '11',
+    text: 'November',
+  },
+  {
+    count: '12',
+    text: 'December',
+  },
+];
 
 const GalleryTabContainer = props => (
   <Typography component="div" className="tab-container">
-    {/* repeat this upto number of months */}
-    <div className="tab-month-text">
-      <span>December 2017</span>
-    </div>
-    <GridList cellHeight={160} cols={5}>
-      {
-        props.thumbnails.map(value => (
-          <GridListTile key={value.thumbnail_url}>
-            <img src={`${props.ip}${value.thumbnail_url}`} alt="grid img" />
-          </GridListTile>
-        ))
-      }
-    </GridList>
-    {/* ends of repeating */}
+    {
+      props.sortedThubnails.map((collection) => {
+        const keys = collection[0].created_at.split('-');
+        const imageMonth = Months.find((month) => {
+            if (month.count === keys[1]) { return month; }
+            return '';
+          });
+        return (
+          <div key={shortid.generate()}>
+            <div className="tab-month-text">
+              <span>{`${imageMonth.text} ${keys[0]}`}</span>
+            </div>
+            <GridList cellHeight={160} cols={5}>
+              {
+                  collection.map(value => (
+                    <GridListTile key={shortid.generate()}>
+                      <img src={`http://${props.ip}${value.thumbnail_url}`} alt="grid img" />
+                      {/* <img src={`${value.thumbnail_url}`} alt="grid img" /> */}
+                    </GridListTile>
+                  ))
+                }
+            </GridList>
+          </div>
+        );
+      })
+    }
   </Typography>
 );
 
@@ -260,18 +356,15 @@ const ShareTabContainer = props => (
   <Typography component="div" className="tab-container">
     {/* repeat this upto number of months */}
     <div className="tab-month-text">
-      <span>December 2017</span>
+      {/* <span>December 2017</span> */}
     </div>
     <GridList cellHeight={160} cols={5}>
       {
         props.thumbnails.map(value => (
-          <GridListTile key={value.photo.thumbnail_url}>
-            <img src={`${props.ip}${value.photo.thumbnail_url}`} alt="grid img" />
+          <GridListTile key={shortid.generate()}>
+            <img src={`http://${props.ip}${value.photo.thumbnail_url}`} alt="grid img" />
           </GridListTile>
         ))
-
-
-
 
       }
     </GridList>
@@ -286,7 +379,7 @@ const FriendsTabContainer = () => (
       <Grid item xs={6} lg={3} >
         <Card>
           <CardMedia
-            // image={}
+            image="http://www.kinyu-z.net/data/wallpapers/16/756201.jpg"
             title="Sam"
           />
           <CardContent>
@@ -330,7 +423,7 @@ GalleryTabContainer.propTypes = {
   thumbnails: PropTypes.arrayOf(PropTypes.object),
 };
 ShareTabContainer.defaultProps = {
-  thumbnails: [{ thumbnail_url: '' }],
+  thumbnails: [{ photo: { owner: 0, thumbnail_url: '' } }],
   ip: '',
 };
 ShareTabContainer.propTypes = {
