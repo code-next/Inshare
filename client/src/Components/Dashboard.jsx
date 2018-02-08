@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Typography, Paper, IconButton, Button, Grid } from 'material-ui';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import { isMobile } from 'react-device-detect';
+import Card, { CardContent } from 'material-ui/Card';
 import GridList, { GridListTile } from 'material-ui/GridList';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Tabs, { Tab } from 'material-ui/Tabs';
@@ -23,14 +24,7 @@ class Dashboard extends Component {
       ip: '192.168.43.6',
       sharedThumbs: [{ photo: { owner: 0, thumbnail_url: '' } }],
       thumbnails: [{ thumbnail_url: '', created_at: '2018-02-07' }],
-      // thumbnails: [
-      //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2018-02-07' },
-      //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2018-02-07' },
-      //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2017-02-07' },
-      //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2017-03-07' },
-      //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2017-02-07' },
-      //   { thumbnail_url: 'http://www.kinyu-z.net/data/wallpapers/16/756201.jpg', created_at: '2018-02-07' },
-      // ],
+      friends: [{ user: 0, first_name: '' }],
       anchorEl: null,
       menuOpen: false,
       sortedThubnails: [[{ thumbnail_url: '', created_at: '2018-02-07' }]],
@@ -43,6 +37,7 @@ class Dashboard extends Component {
     this.getThumbs = this.getThumbs.bind(this);
     this.getSharedThumbs = this.getSharedThumbs.bind(this);
     this.sortByDate = this.sortByDate.bind(this);
+    this.getFriends = this.getFriends.bind(this);
   }
   componentWillMount() {
     this.handleLogin();
@@ -50,7 +45,24 @@ class Dashboard extends Component {
   componentDidMount() {
     this.getThumbs();
     this.getSharedThumbs();
+    this.getFriends();
     this.sortByDate();
+  }
+  getFriends() {
+    fetch(`http://${this.state.ip}:8000/share/get-friends/`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        Authorization: this.state.token,
+      },
+    })
+      .then(res => res.json())
+      .then((data) => {
+        this.setState({ friends: data });
+      })
+      .catch((err) => { console.log(err); });
+
+    console.log(this.state.friends);
   }
   // runs when dashboad is mounted and image is uploaded
   getThumbs() {
@@ -118,6 +130,10 @@ class Dashboard extends Component {
     this.setState({ tabIndex: value });
     if (value === 1) {
       this.getSharedThumbs();
+    } else if (value === 0) {
+      this.getThumbs();
+    } else if (value === 2) {
+      this.getFriends();
     }
   }
   // runs when fab button clicks
@@ -197,7 +213,7 @@ class Dashboard extends Component {
               sortedThubnails={this.state.sortedThubnails}
             />
             <ShareTabContainer thumbnails={this.state.sharedThumbs} ip={this.state.ip} />
-            <FriendsTabContainer />
+            <FriendsTabContainer friends={this.state.friends} ip={this.state.ip} />
           </SwipeableViews>
           <AddButtons
             tabIndex={this.state.tabIndex}
@@ -334,22 +350,35 @@ const GalleryTabContainer = props => (
             if (month.count === keys[1]) { return month; }
             return '';
           });
-        console.log(props.sortedThubnails);
         return (
           <div key={shortid.generate()}>
             <div className="tab-month-text">
               <span>{`${imageMonth.text} ${keys[0]}`}</span>
             </div>
-            <GridList cellHeight={160} cols={5}>
-              {
-                  collection.map(value => (
-                    <GridListTile key={shortid.generate()}>
-                      <img src={`http://${props.ip}:8000/${value.thumbnail_url}`} alt="grid img" />
-                      {/* <img src={`${value.thumbnail_url}`} alt="grid img" /> */}
-                    </GridListTile>
-                  ))
-                }
-            </GridList>
+            {
+              (isMobile) ?
+                <GridList cellHeight={160} cols={2}>
+                  {
+                      collection.map(value => (
+                        <GridListTile key={shortid.generate()}>
+                          <img src={`http://${props.ip}:8000/${value.thumbnail_url}`} alt="grid img" />
+                          {/* <img src={`${value.thumbnail_url}`} alt="grid img" /> */}
+                        </GridListTile>
+                      ))
+                    }
+                </GridList>
+                :
+                <GridList cellHeight={160} cols={5}>
+                  {
+                      collection.map(value => (
+                        <GridListTile key={shortid.generate()}>
+                          <img src={`http://${props.ip}:8000/${value.thumbnail_url}`} alt="grid img" />
+                          {/* <img src={`${value.thumbnail_url}`} alt="grid img" /> */}
+                        </GridListTile>
+                      ))
+                    }
+                </GridList>
+            }
           </div>
         );
       })
@@ -363,50 +392,52 @@ const ShareTabContainer = props => (
     <div className="tab-month-text">
       {/* <span>December 2017</span> */}
     </div>
-    <GridList cellHeight={160} cols={5}>
-      {
-        props.thumbnails.map(value => (
-          <GridListTile key={shortid.generate()}>
-            <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
-          </GridListTile>
-        ))
+    {
+      (isMobile) ?
+        <GridList cellHeight={160} cols={2}>
+          {
+            props.thumbnails.map(value => (
+              <GridListTile key={shortid.generate()}>
+                <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
+              </GridListTile>
+            ))
 
-      }
-    </GridList>
+          }
+        </GridList>
+      :
+        <GridList cellHeight={160} cols={5}>
+          {
+            props.thumbnails.map(value => (
+              <GridListTile key={shortid.generate()}>
+                <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
+              </GridListTile>
+            ))
+
+          }
+        </GridList>
+
+    }
     {/* ends of repeating */}
   </Typography>
 );
 
-const FriendsTabContainer = () => (
+const FriendsTabContainer = props => (
   <Typography component="div" className="tab-container">
     {/* repeat this upto number of months */}
     <Grid container>
-      <Grid item xs={6} lg={3} >
-        <Card>
-          <CardMedia
-            image="http://www.kinyu-z.net/data/wallpapers/16/756201.jpg"
-            title="Sam"
-          />
-          <CardContent>
-            <Typography type="headline" component="h2">
-                Lizard
-            </Typography>
-            <Typography component="p">
-                Lizards are a widespread group of squamate reptiles,
-                with over 6,000 species, ranging
-                across all continents except Antarctica
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button dense color="primary">
-                Share
-            </Button>
-            <Button dense color="primary">
-                Learn More
-            </Button>
-          </CardActions>
-        </Card>
-      </Grid>
+      {
+        props.friends.map(value => (
+          <Grid item xs={6} lg={3} key={shortid.generate()} >
+            <Card>
+              <CardContent>
+                <Typography type="headline" component="h2">
+                  {value.first_name}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          ))
+      }
     </Grid>
     {/* ends of repeating */}
   </Typography>
@@ -433,5 +464,8 @@ ShareTabContainer.defaultProps = {
 };
 ShareTabContainer.propTypes = {
   ip: PropTypes.string,
+  thumbnails: PropTypes.arrayOf(PropTypes.object),
+};
+FriendsTabContainer.propTypes = {
   thumbnails: PropTypes.arrayOf(PropTypes.object),
 };
