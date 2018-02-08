@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Step, Stepper, StepButton, Grid } from 'material-ui';
 
-
 class StepperStep extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +38,7 @@ class StepperStep extends Component {
             connector={null}
             style={{
               placeContent: 'normal normal',
-              marginLeft: '40%',
+              marginLeft: '45%',
               backgroundColor: 'rgba(57,73,171,0)',
             }}
           >
