@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from gallery.models import Tags,Photo
-
+from accounts.models import Person
+from django.contrib.auth.models import User
 
 class TrackSerializer(serializers.ModelSerializer):
     thumbnail_url = serializers.SerializerMethodField('get_the_thumbnail_url')
@@ -19,3 +20,10 @@ class SharedImageSerializer(serializers.ModelSerializer):
     class Meta:
         model=Tags
         fields=('photo','tag')
+
+
+class FriendSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields=('first_name','username')
+
