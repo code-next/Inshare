@@ -23,3 +23,23 @@
   bottom: 8%;
   right: 4%;
 }
+@media only screen and (max-width: 768px) {
+  .gal-tab-paper{
+    margin-top:15%;
+    position: fixed;
+    z-index: 1;
+    width:100%;
+  }
+  .tab-container{
+    padding: 24px;
+    padding-top:40%;
+  }
+}
+@media only screen and (max-width: 1440px) and (min-width:1440px) {
+  .gal-tab-paper{
+    margin-top:4.0%;
+    position: fixed;
+    z-index: 1;
+    width:100%;
+  }
+}
