@@ -28,6 +28,7 @@ class SignIn extends Component {
       .then((data) => {
         if (data.token) {
           localStorage.setItem('InshareToken', `JWT ${data.token}`);
+          localStorage.setItem('InshareUsername', data.Username);
           this.props.login();
         }
       })

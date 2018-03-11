@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { AppBar, Toolbar, Typography, Paper, IconButton, Button, Grid } from 'material-ui';
+import { AppBar, Toolbar, Typography, Paper, IconButton, Button, Grid, Tooltip } from 'material-ui';
 import { isMobile } from 'react-device-detect';
 import Card, { CardContent } from 'material-ui/Card';
 import GridList, { GridListTile } from 'material-ui/GridList';
@@ -18,6 +18,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
       isLoggedIn: false,
       token: null,
       tabIndex: 0,
@@ -61,8 +62,6 @@ class Dashboard extends Component {
         this.setState({ friends: data });
       })
       .catch((err) => { console.log(err); });
-
-    console.log(this.state.friends);
   }
   // runs when dashboad is mounted and image is uploaded
   getThumbs() {
@@ -119,6 +118,9 @@ class Dashboard extends Component {
     localStorage.getItem('InshareToken') && this.setState({
       token: localStorage.getItem('InshareToken'),
       isLoggedIn: true,
+    });
+    localStorage.getItem('InshareUsername') && this.setState({
+      username: localStorage.getItem('InshareUsername'),
     });
   }
   // runs when logout button clicks
@@ -181,6 +183,9 @@ class Dashboard extends Component {
               </IconButton>
               <Typography type="title" color="inherit" style={{ flex: 1 }}>
                 in
+              </Typography>
+              <Typography type="subheading" color="inherit">
+                {this.state.username}
               </Typography>
               <IconButton
                 color="inherit"
@@ -254,23 +259,24 @@ const TabComponent = props => (
 
 const AddButtons = props => (
   <div>
-
-    <Zoom
-      appear={false}
-      in={props.tabIndex === 0}
-      timeout={200}
-      enterDelay={300}
-      unmountOnExit
-    >
-      <Button
-        fab
-        className="icon-button"
-        color="primary"
-        onClick={props.click}
+    <Tooltip title="upload">
+      <Zoom
+        appear={false}
+        in={props.tabIndex === 0}
+        timeout={200}
+        enterDelay={300}
+        unmountOnExit
       >
-        <Add />
-      </Button>
-    </Zoom>
+        <Button
+          fab
+          className="icon-button"
+          color="primary"
+          onClick={props.click}
+        >
+          <Add />
+        </Button>
+      </Zoom>
+    </Tooltip>
     <Zoom
       appear={false}
       in={props.tabIndex === 2}
@@ -398,7 +404,9 @@ const ShareTabContainer = props => (
           {
             props.thumbnails.map(value => (
               <GridListTile key={shortid.generate()}>
-                <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
+                <Tooltip title={`shared by ${value.photo.user}`}>
+                  <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
+                </Tooltip>
               </GridListTile>
             ))
 
@@ -409,7 +417,9 @@ const ShareTabContainer = props => (
           {
             props.thumbnails.map(value => (
               <GridListTile key={shortid.generate()}>
-                <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
+                <Tooltip title={`shared by ${value.photo.user}`}>
+                  <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
+                </Tooltip>
               </GridListTile>
             ))
 
