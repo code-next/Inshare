@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Typography, Paper, IconButton, Button, Grid, Tooltip } from 'material-ui';
 import { isMobile } from 'react-device-detect';
 import Card, { CardContent } from 'material-ui/Card';
-import GridList, { GridListTile } from 'material-ui/GridList';
+import GridList, { GridListTile, GridListTileBar} from 'material-ui/GridList';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Zoom from 'material-ui/transitions/Zoom';
@@ -404,8 +404,14 @@ const ShareTabContainer = props => (
           {
             props.thumbnails.map(value => (
               <GridListTile key={shortid.generate()}>
-                <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
-                <p>{`shared by ${value.photo.user}`}</p>
+
+                    <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
+                 <GridListTileBar
+              title={`shared by ${value.photo.owner.username}`}
+
+
+            />
+
               </GridListTile>
             ))
 
@@ -416,8 +422,14 @@ const ShareTabContainer = props => (
           {
             props.thumbnails.map(value => (
               <GridListTile key={shortid.generate()}>
-                <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
-                <p>{`shared by ${value.photo.user}`}</p>
+
+                    <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
+                 <GridListTileBar
+              title={`shared by ${value.photo.owner.username}`}
+
+
+            />
+
               </GridListTile>
             ))
 
