@@ -91,7 +91,7 @@ class SignUp extends Component {
       .then((data) => {
         if (data.token) {
           localStorage.setItem('InshareToken', data.token);
-          localStorage.setItem('InshareUsername', data.Username);
+          localStorage.setItem('InshareUsername', data.email);
           this.props.login();
         }
       })

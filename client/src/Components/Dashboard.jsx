@@ -404,9 +404,8 @@ const ShareTabContainer = props => (
           {
             props.thumbnails.map(value => (
               <GridListTile key={shortid.generate()}>
-                <Tooltip title={`shared by ${value.photo.user}`}>
-                  <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
-                </Tooltip>
+                <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
+                <p>{`shared by ${value.photo.user}`}</p>
               </GridListTile>
             ))
 
@@ -417,9 +416,8 @@ const ShareTabContainer = props => (
           {
             props.thumbnails.map(value => (
               <GridListTile key={shortid.generate()}>
-                <Tooltip title={`shared by ${value.photo.user}`}>
-                  <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
-                </Tooltip>
+                <img src={`http://${props.ip}:8000/${value.photo.thumbnail_url}`} alt="grid img" />
+                <p>{`shared by ${value.photo.user}`}</p>
               </GridListTile>
             ))
 
