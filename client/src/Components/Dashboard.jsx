@@ -22,7 +22,7 @@ class Dashboard extends Component {
       isLoggedIn: false,
       token: null,
       tabIndex: 0,
-      ip: '192.168.43.6',
+      ip: '127.0.0.1',
       sharedThumbs: [{ photo: { owner: 0, thumbnail_url: '' } }],
       thumbnails: [{ thumbnail_url: '', created_at: '2018-02-07' }],
       friends: [{ user: 0, first_name: '' }],

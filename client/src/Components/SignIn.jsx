@@ -13,7 +13,7 @@ class SignIn extends Component {
     this.handleSignIn = this.handleSignIn.bind(this);
   }
   handleSignIn() {
-    fetch('http://192.168.43.6:8000/auth/login/', {
+    fetch('http://127.0.0.1:8000/auth/login/', {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',

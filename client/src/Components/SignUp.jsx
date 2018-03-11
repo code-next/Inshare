@@ -81,7 +81,7 @@ class SignUp extends Component {
     formData.append('first_name', this.state.first_name);
     formData.append('email', this.state.email);
     formData.append('password', this.state.password);
-    fetch('http://192.168.43.6:8000/auth/register/', {
+    fetch('http://127.0.0.1:8000/auth/register/', {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
