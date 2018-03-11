@@ -32,7 +32,7 @@ def get_encodings_and_compare_with_friends(pk):
                     person_encoding=np.loads(person.face_encodings)
                     results = face_recognition.compare_faces([encoding],person_encoding)
                     if results[0]:
-                        if not Tags.objects.get(tag=person.pk,photo=photo):
+                        if not Tags.objects.filter(tag=person.pk,photo=photo):
                             tag = Tags(photo= photo, tag = person.pk, is_user=True)
                             tag.save()
                 except:
