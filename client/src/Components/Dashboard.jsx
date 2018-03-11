@@ -18,6 +18,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
       isLoggedIn: false,
       token: null,
       tabIndex: 0,
@@ -120,6 +121,9 @@ class Dashboard extends Component {
       token: localStorage.getItem('InshareToken'),
       isLoggedIn: true,
     });
+    localStorage.getItem('InshareUsername') && this.setState({
+      username: localStorage.getItem('InshareUsername'),
+    });
   }
   // runs when logout button clicks
   handleLogout() {
@@ -181,6 +185,9 @@ class Dashboard extends Component {
               </IconButton>
               <Typography type="title" color="inherit" style={{ flex: 1 }}>
                 in
+              </Typography>
+              <Typography type="subheading" color="inherit">
+                {this.state.username}
               </Typography>
               <IconButton
                 color="inherit"
